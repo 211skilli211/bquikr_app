@@ -1,0 +1,1 @@
+# bquikr_app
