@@ -30,10 +30,10 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="#platform"
+              href="/tools"
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-slate-900 bg-cyan-400 hover:bg-cyan-300 rounded-xl transition-all hover:shadow-lg hover:shadow-cyan-500/25"
             >
-              Explore Platform
+              Explore Tools
             </a>
             <a
               href="/documents"

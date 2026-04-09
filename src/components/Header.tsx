@@ -5,10 +5,9 @@ import Link from 'next/link';
 
 const navLinks = [
   { href: '/', label: 'Home' },
+  { href: '/tools', label: 'Tools' },
   { href: '/documents', label: 'Documents' },
-  { href: '/ai-search', label: 'AI Search' },
   { href: '/api-services', label: 'APIs' },
-  { href: '/paperclip', label: 'AI Company' },
   { href: '/geospatial', label: 'Maps' },
   { href: '/avatar', label: 'Avatar' },
   { href: '/simulation', label: 'Simulation' },
