@@ -2,253 +2,304 @@
 
 import { useState } from 'react';
 
-export default function Home() {
-  const [email, setEmail] = useState('');
+function ServiceCard({ service, index }: { service: any; index: number }) {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="relative">
-      {/* Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-900/30 via-slate-900 to-slate-950 pointer-events-none" />
-      
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20">
+    <div 
+      className="group relative rounded-2xl overflow-hidden"
+      style={{
+        animationDelay: `${index * 0.1}s`,
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-950" />
+      <img 
+        src={service.image} 
+        alt={service.title}
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isHovered ? 'opacity-20' : 'opacity-0'}`}
+      />
+      <div className="relative p-8 h-full flex flex-col">
+        <div className="text-5xl mb-6">{service.icon}</div>
+        <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
+        <p className="text-slate-300 mb-4 flex-1">{service.description}</p>
+        <div className="flex flex-wrap gap-2">
+          {service.tags?.map((tag: string) => (
+            <span key={tag} className="px-3 py-1 text-xs rounded-full bg-white/10 text-slate-300">
+              {tag}
+            </span>
+          ))}
+        </div>
+        {service.comingSoon && (
+          <span className="absolute top-4 right-4 px-3 py-1 text-xs font-medium rounded-full bg-amber-500/20 text-amber-400">
+            Coming Soon
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function PartnerCard({ partner }: { partner: any }) {
+  return (
+    <a
+      href={partner.href}
+      target="_blank"
+      className="group relative rounded-xl overflow-hidden"
+    >
+      <img 
+        src={partner.image} 
+        alt={partner.name}
+        className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-500"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 p-4">
+        <span className="text-xs text-slate-400">{partner.type}</span>
+        <h4 className="font-semibold text-white">{partner.name}</h4>
+      </div>
+    </a>
+  );
+}
+
+export default function Home() {
+  const [email, setEmail] = useState('');
+  const [formStatus, setFormStatus] = useState('');
+
+  const services = [
+    {
+      title: 'AI Digital Influencer',
+      description: 'Create AI-powered influencers with authentic Caribbean accents. Full setup including voice cloning for marketing and social media.',
+      icon: '🎯',
+      image: 'https://images.unsplash.com/photo-1557804506-669a679dbae4?w=800&h=600&fit=crop',
+      tags: ['Voice Cloning', 'Multi-Platform', '24/7'],
+      comingSoon: true,
+    },
+    {
+      title: 'Business APIs',
+      description: 'Powerful APIs for data conversion, accounting, inventory management and business automation.',
+      icon: '⚡',
+      image: 'https://images.unsplash.com/photo-1551288049-beb4b4c8ab04?w=800&h=600&fit=crop',
+      tags: ['Data→Spreadsheet', 'Accounting', 'Inventory'],
+      comingSoon: false,
+    },
+    {
+      title: 'Regional Intel',
+      description: 'Location intelligence and geospatial analytics for Caribbean businesses and tourism.',
+      icon: '🌎',
+      image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&h=600&fit=crop',
+      tags: ['Mapping', 'Analytics', 'Tourism'],
+      comingSoon: false,
+    },
+    {
+      title: 'B2B Connectivity',
+      description: 'API integration for regional businesses and telecom partnerships.',
+      icon: '🔗',
+      image: 'https://images.unsplash.com/photo-1553877522-4329d397e09b?w=800&h=600&fit=crop',
+      tags: ['Telecom', 'Enterprise', 'Integration'],
+      comingSoon: true,
+    },
+  ];
+
+  const partners = [
+    { name: 'IslandHub', type: 'Marketplace', image: 'https://images.unsplash.com/photo-1559523161-0fc0d8b38a7f?w=400&h=200&fit=crop', href: 'https://islandhub.app' },
+    { name: 'CTC Marketplace', type: 'Marketplace', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=200&fit=crop', href: '#' },
+    { name: 'Graphic Trends', type: 'Services', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=200&fit=crop', href: '#' },
+    { name: 'IBT Financial', type: 'Fintech', image: 'https://images.unsplash.com/photo-1556742049-0c23a967e053?w=400&h=200&fit=crop', href: '#' },
+    { name: 'Elon Processing', type: 'Payments', image: 'https://images.unsplash.com/photo-1621761191319-c62fb2d591b6?w=400&h=200&fit=crop', href: '#' },
+  ];
+
+  const whyChooseUs = [
+    { icon: '🎯', title: 'Caribbean-First', description: 'Purpose-built for regional needs and challenges' },
+    { icon: '⚡', title: 'API-First', description: 'Modern architecture for seamless integration' },
+    { icon: '🌍', title: 'Global Reach', description: 'Serving clients across Caribbean and beyond' },
+    { icon: '💬', title: '24/7 Support', description: 'Round-the-clock technical assistance' },
+  ];
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus('Thanks for your interest! We\'ll be in touch soon.');
+    setEmail('');
+  };
+
+  return (
+    <div className="bg-slate-950">
+      {/* Animated Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-[128px] animate-pulse" style={{ animationDelay: '1s' }} />
+      </div>
+
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-lg border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-6">
-                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                <span className="text-sm text-cyan-400">Intelligent Caribbean Solutions</span>
-              </div>
-              
-              <h1 className="text-5xl sm:text-6xl font-bold tracking-tight text-slate-100 mb-6">
-                Powerful Tools for
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
-                  Modern Business
-                </span>
-              </h1>
-              
-              <p className="text-xl text-slate-400 max-w-lg mb-8">
-                API services, geospatial intelligence, AI-powered tools. 
-                Everything Caribbean enterprises need to scale in the digital economy.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <a
-                  href="/tools"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-slate-900 bg-cyan-400 hover:bg-cyan-300 rounded-xl transition-all hover:shadow-lg hover:shadow-cyan-500/25"
-                >
-                  Explore Tools
-                </a>
-                <a
-                  href="https://islandhub.app"
-                  target="_blank"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-slate-300 border border-slate-700 hover:border-slate-600 rounded-xl transition-all"
-                >
-                  Visit IslandHub →
-                </a>
-              </div>
-
-              <div className="flex items-center gap-8">
-                <div>
-                  <div className="text-2xl font-bold text-cyan-400">API-First</div>
-                  <div className="text-sm text-slate-500">Architecture</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-emerald-400">Global</div>
-                  <div className="text-sm text-slate-500">Reach</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-teal-400">24/7</div>
-                  <div className="text-sm text-slate-500">Automation</div>
-                </div>
-              </div>
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                IBT
+              </span>
+              <span className="text-sm text-slate-500 font-medium">Solutions</span>
             </div>
-
-            {/* Hero Visual - Caribbean Business Theme */}
-            <div className="relative">
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1569020586994-57e06169d5c9?w=800&h=800&fit=crop" 
-                  alt="Caribbean business district"
-                  className="w-full h-full object-cover opacity-60"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent" />
-                <div className="absolute bottom-8 left-8 right-8">
-                  <p className="text-slate-100 font-medium">[Caribbean Business Hub Image]</p>
-                </div>
-              </div>
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -right-4 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl" />
-              <div className="absolute -bottom-4 -left-4 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl" />
+            <div className="hidden md:flex items-center gap-8">
+              <a href="#services" className="text-sm text-slate-300 hover:text-white transition-colors">Services</a>
+              <a href="#partners" className="text-sm text-slate-300 hover:text-white transition-colors">Partners</a>
+              <a href="#contact" className="text-sm text-slate-300 hover:text-white transition-colors">Contact</a>
+              <a href="https://islandhub.app" target="_blank" className="text-sm font-medium text-emerald-400 hover:text-emerald-300">
+                IslandHub →
+              </a>
             </div>
           </div>
         </div>
-      </section>
+      </nav>
 
-      {/* Social Proof */}
-      <section className="py-12 border-y border-slate-800/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-slate-500 text-sm mb-8">POWERING BUSINESSES ACROSS THE CARIBBEAN</p>
-          <div className="flex flex-wrap items-center justify-center gap-12 opacity-50">
-            {['IBT Solutions', 'IslandHub', 'Graphic Trends', 'CTC Marketplace', 'Partners'].map((brand) => (
-              <span key={brand} className="text-xl font-bold text-slate-400">{brand}</span>
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center pt-16">
+        <div className="absolute inset-0">
+          <img 
+            src="https://images.unsplash.com/photo-1569020586994-57e06169d5c9?w=1920&h=1080&fit=crop" 
+            alt="Caribbean Business"
+            className="w-full h-full object-cover opacity-30"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/30" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="animate-fadeIn">
+            <span className="inline-block px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-sm mb-8">
+              Intelligent Business Solutions
+            </span>
+            <h1 className="text-5xl sm:text-7xl font-bold text-white mb-6 leading-tight">
+              Powering Caribbean
+              <br />
+              <span className="bg-gradient-to-r from-cyan-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                Digital Excellence
+              </span>
+            </h1>
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-10">
+              AI-powered tools, business APIs, and connectivity solutions for modern enterprises. 
+              From the Caribbean to the world.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="#services" className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-xl transition-all hover:shadow-lg hover:shadow-cyan-500/25">
+                Explore Services
+              </a>
+              <a href="#contact" className="px-8 py-4 border border-slate-700 hover:border-slate-600 text-white font-medium rounded-xl transition-all">
+                Get in Touch
+              </a>
+            </div>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-3 gap-8 mt-20">
+            {[
+              { value: '50K+', label: 'API Requests' },
+              { value: '99.9%', label: 'Uptime' },
+              { value: '24/7', label: 'Support' },
+            ].map((stat, i) => (
+              <div key={i} className="text-center animate-slideUp" style={{ animationDelay: `${0.3 + i * 0.1}s` }}>
+                <div className="text-3xl sm:text-4xl font-bold text-white">{stat.value}</div>
+                <div className="text-sm text-slate-500 mt-1">{stat.label}</div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Tools & Services */}
-      <section className="py-24">
+      {/* Services Section */}
+      <section id="services" className="py-24 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-100 mb-4">Tools & Services</h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
-              Professional-grade tools for modern Caribbean enterprises
+            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">Our Services</h2>
+            <p className="text-slate-400 max-w-xl mx-auto">
+              Comprehensive solutions for modern Caribbean enterprises
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'API Services',
-                description: 'PDF generation, email verification, screenshots for automation',
-                icon: '🔗',
-                image: 'https://images.unsplash.com/photo-1551288049-beb4b4c8ab04?w=400&h=300&fit=crop',
-                href: '/api-services',
-              },
-              {
-                title: 'Geospatial Intelligence',
-                description: '3D mapping, location analytics for Caribbean region',
-                icon: '🗺️',
-                image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=400&h=300&fit=crop',
-                href: '/geospatial',
-              },
-              {
-                title: 'AI Avatar Tools',
-                description: 'Create AI influencers for marketing & brand promotion',
-                icon: '🎭',
-                image: 'https://images.unsplash.com/photo-1633412802994-5c058f151b66?w=400&h=300&fit=crop',
-                href: '/avatar',
-              },
-            ].map((service) => (
-              <a
-                key={service.title}
-                href={service.href}
-                className="group rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-cyan-500/50 transition-all overflow-hidden"
-              >
-                <div className="aspect-video overflow-hidden">
-                  <img 
-                    src={service.image} 
-                    alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-2xl">{service.icon}</span>
-                    <h3 className="text-xl font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors">
-                      {service.title}
-                    </h3>
-                  </div>
-                  <p className="text-slate-400 text-sm">{service.description}</p>
-                </div>
-              </a>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {services.map((service, i) => (
+              <div key={service.title} className="animate-fadeIn" style={{ animationDelay: `${i * 0.1}s` }}>
+                <ServiceCard service={service} index={i} />
+              </div>
             ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <a href="/tools" className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 font-medium">
-              View all services →
-            </a>
           </div>
         </div>
       </section>
 
-      {/* Partner Platforms */}
-      <section className="py-24 border-t border-slate-800 bg-slate-900/50">
+      {/* Why Choose Us */}
+      <section className="py-24 bg-slate-900/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {whyChooseUs.map((item, i) => (
+              <div key={item.title} className="text-center p-6 animate-fadeIn" style={{ animationDelay: `${i * 0.1}s` }}>
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
+                <p className="text-sm text-slate-400">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section id="partners" className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-100 mb-4">Our Ecosystem</h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">Our Ecosystem</h2>
+            <p className="text-slate-400 max-w-xl mx-auto">
               Connected platforms powering Caribbean commerce
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* IslandHub */}
-            <a href="https://islandhub.app" target="_blank" className="group relative rounded-2xl overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1559523161-0fc0d8b38a7f?w=800&h=400&fit=crop" 
-                alt="IslandHub Marketplace"
-                className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/80 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-sm mb-3">Marketplace</span>
-                <h3 className="text-2xl font-bold text-white mb-2">IslandHub</h3>
-                <p className="text-slate-300 mb-4">B2B marketplace for Caribbean trade. Connect with suppliers and vendors across the region.</p>
-                <span className="text-emerald-400 font-medium group-hover:underline">Visit IslandHub →</span>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {partners.map((partner, i) => (
+              <div key={partner.name} className="animate-scaleIn" style={{ animationDelay: `${i * 0.05}s` }}>
+                <PartnerCard partner={partner} />
               </div>
-            </a>
-
-            {/* CTC Marketplace */}
-            <a href="#" className="group relative rounded-2xl overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&h=400&fit=crop" 
-                alt="CTC Marketplace"
-                className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-900/80 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <span className="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-sm mb-3">Marketplace</span>
-                <h3 className="text-2xl font-bold text-white mb-2">CTC Marketplace</h3>
-                <p className="text-slate-300 mb-4">Agricultural & marine marketplace with AI-powered arbitrage capabilities.</p>
-                <span className="text-amber-400 font-medium">Coming Soon →</span>
-              </div>
-            </a>
-          </div>
-
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-xl bg-slate-800/50 border border-slate-700 text-center">
-              <div className="text-3xl mb-3">🎨</div>
-              <h4 className="font-semibold text-slate-200">Graphic Trends</h4>
-              <p className="text-sm text-slate-400 mt-2">Manufacturing & digital creation</p>
-            </div>
-            <div className="p-6 rounded-xl bg-slate-800/50 border border-slate-700 text-center">
-              <div className="text-3xl mb-3">💳</div>
-              <h4 className="font-semibold text-slate-200">IBT Financial</h4>
-              <p className="text-sm text-slate-400 mt-2">Fintech & digital payments</p>
-            </div>
-            <div className="p-6 rounded-xl bg-slate-800/50 border border-slate-700 text-center">
-              <div className="text-3xl mb-3">🤝</div>
-              <h4 className="font-semibold text-slate-200">Family Co-op</h4>
-              <p className="text-sm text-slate-400 mt-2">Community ownership initiative</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-slate-100 mb-4">Ready to scale your business?</h2>
-          <p className="text-lg text-slate-400 mb-8">
-            Join the network of Caribbean enterprises using intelligent infrastructure.
+      {/* Contact Section */}
+      <section id="contact" className="py-24 bg-slate-900/50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl font-bold text-white mb-4">Ready to Transform?</h2>
+          <p className="text-slate-400 mb-8">
+            Let&apos;s build something extraordinary together.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+          <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" onSubmit={handleSubmit}>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="flex-1 px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+              className="flex-1 px-6 py-4 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+              required
             />
-            <button className="px-8 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-xl transition-colors">
-              Get Started
+            <button type="submit" className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-xl transition-all">
+              Submit
             </button>
-          </div>
+          </form>
+          {formStatus && <p className="text-cyan-400 mt-4">{formStatus}</p>}
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="py-12 border-t border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                IBT
+              </span>
+              <span className="text-sm text-slate-500">Solutions</span>
+            </div>
+            <p className="text-slate-500 text-sm">
+              © 2026 IBT Solutions. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
