@@ -23,7 +23,7 @@ export default function ToolsPage() {
       icon: '🎯',
       description: 'AI-powered tools & automation',
       tools: [
-        { id: 'influencer', name: 'AI Digital Influencer', description: 'Create AI influencers with voice cloning', comingSoon: true },
+        { id: 'influencer', name: 'AI Digital Influencer', description: 'Create AI influencers with voice cloning', href: '/influencer' },
       ],
     },
     {
@@ -248,17 +248,17 @@ export default function ToolsPage() {
 
         {/* AI Solutions Section */}
         {activeCategory === 'ai' && (
-          <div className="bg-slate-900 rounded-xl p-8 border border-slate-800 text-center">
+          <a href="/influencer" className="block bg-slate-900 rounded-xl p-8 border border-slate-800 hover:border-cyan-500 transition-colors">
             <span className="text-6xl mb-4 block">🎯</span>
             <h3 className="text-2xl font-bold text-white mb-2">AI Digital Influencer</h3>
             <p className="text-slate-400 mb-6">
               Create AI-powered influencers with authentic Caribbean accents. 
               Full setup including voice cloning for marketing and social media.
             </p>
-            <span className="inline-block px-4 py-2 bg-amber-500/20 text-amber-400 rounded-full text-sm">
-              Coming Soon
+            <span className="inline-block px-4 py-2 bg-cyan-500 text-slate-900 font-medium rounded-full text-sm">
+              Launch Tool →
             </span>
-          </div>
+          </a>
         )}
 
         {/* Connectivity Section */}
