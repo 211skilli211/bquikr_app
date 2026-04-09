@@ -2,17 +2,15 @@ import Link from 'next/link';
 
 const footerLinks = [
   { href: '/', label: 'Home' },
-  { href: '/tools', label: 'Tools' },
-  { href: '/documents', label: 'Documents' },
-  { href: '/api-services', label: 'API Services' },
+  { href: '/tools', label: 'Services' },
+  { href: '/api-services', label: 'APIs' },
   { href: '/geospatial', label: 'Maps' },
   { href: '/avatar', label: 'Avatar' },
-  { href: '/simulation', label: 'Simulation' },
 ];
 
 const socialLinks = [
   { href: '#', label: 'Twitter' },
-  { href: '#', label: 'GitHub' },
+  { href: '#', label: 'LinkedIn' },
   { href: '#', label: 'Discord' },
 ];
 
@@ -24,20 +22,27 @@ export default function Footer() {
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-                Quikr
+                IBT
               </span>
               <span className="text-sm text-slate-500 font-medium">Solutions</span>
             </div>
-            <p className="text-slate-400 text-sm max-w-md">
-              AI-powered business platform for Caribbean & South America economies. 
-              Building the future of regional commerce with intelligent tools.
+            <p className="text-slate-400 text-sm max-w-md mb-4">
+              Intelligent business solutions for Caribbean commerce. 
+              Technology infrastructure for modern enterprises.
             </p>
+            <a 
+              href="https://islandhub.app" 
+              target="_blank"
+              className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm font-medium"
+            >
+              Visit IslandHub →
+            </a>
           </div>
 
           <div>
             <h4 className="font-semibold text-slate-200 mb-4">Services</h4>
             <ul className="space-y-2">
-              {footerLinks.slice(0, 4).map((link) => (
+              {footerLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-slate-400 hover:text-cyan-400 text-sm transition-colors">
                     {link.label}
@@ -63,7 +68,7 @@ export default function Footer() {
 
         <div className="border-t border-slate-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-slate-500 text-sm">
-            &copy; 2026 Quikr Solutions. All rights reserved.
+            &copy; 2026 IBT Solutions. All rights reserved.
           </p>
           <div className="flex gap-6">
             <a href="#" className="text-slate-500 hover:text-cyan-400 text-sm transition-colors">Privacy</a>
