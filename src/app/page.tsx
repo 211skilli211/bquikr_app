@@ -6,22 +6,24 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div 
-      className="group relative rounded-2xl overflow-hidden"
+    <a 
+      href={service.href || '#'}
+      className="group relative rounded-2xl overflow-hidden block"
       style={{
         animationDelay: `${index * 0.1}s`,
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-950" />
-      <img 
-        src={service.image} 
-        alt={service.title}
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isHovered ? 'opacity-20' : 'opacity-0'}`}
-      />
-      <div className="relative p-8 h-full flex flex-col">
-        <div className="text-5xl mb-6">{service.icon}</div>
+      <div className="absolute inset-0">
+        <img 
+          src={service.image} 
+          alt={service.title}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-slate-900/60" />
+      </div>
+      <div className="relative p-8 h-full flex flex-col min-h-[320px]">
         <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
         <p className="text-slate-300 mb-4 flex-1">{service.description}</p>
         <div className="flex flex-wrap gap-2">
@@ -37,7 +39,7 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
           </span>
         )}
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -70,33 +72,33 @@ export default function Home() {
     {
       title: 'AI Digital Influencer',
       description: 'Create AI-powered influencers with authentic Caribbean accents. Full setup including voice cloning for marketing and social media.',
-      icon: '🎯',
       image: 'https://images.unsplash.com/photo-1557804506-669a679dbae4?w=800&h=600&fit=crop',
       tags: ['Voice Cloning', 'Multi-Platform', '24/7'],
+      href: '/influencer',
       comingSoon: true,
     },
     {
       title: 'Business APIs',
       description: 'Powerful APIs for data conversion, accounting, inventory management and business automation.',
-      icon: '⚡',
       image: 'https://images.unsplash.com/photo-1551288049-beb4b4c8ab04?w=800&h=600&fit=crop',
       tags: ['Data→Spreadsheet', 'Accounting', 'Inventory'],
+      href: '/api-services',
       comingSoon: false,
     },
     {
       title: 'Regional Intel',
       description: 'Location intelligence and geospatial analytics for Caribbean businesses and tourism.',
-      icon: '🌎',
       image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&h=600&fit=crop',
       tags: ['Mapping', 'Analytics', 'Tourism'],
+      href: '/geospatial',
       comingSoon: false,
     },
     {
       title: 'B2B Connectivity',
       description: 'API integration for regional businesses and telecom partnerships.',
-      icon: '🔗',
       image: 'https://images.unsplash.com/photo-1553877522-4329d397e09b?w=800&h=600&fit=crop',
       tags: ['Telecom', 'Enterprise', 'Integration'],
+      href: '#',
       comingSoon: true,
     },
   ];
@@ -140,13 +142,21 @@ export default function Home() {
               </span>
               <span className="text-sm text-slate-500 font-medium">Solutions</span>
             </div>
-            <div className="hidden md:flex items-center gap-8">
-              <a href="#services" className="text-sm text-slate-300 hover:text-white transition-colors">Services</a>
-              <a href="#partners" className="text-sm text-slate-300 hover:text-white transition-colors">Partners</a>
-              <a href="#contact" className="text-sm text-slate-300 hover:text-white transition-colors">Contact</a>
-              <a href="https://islandhub.app" target="_blank" className="text-sm font-medium text-emerald-400 hover:text-emerald-300">
-                IslandHub →
-              </a>
+            <div className="flex items-center gap-4">
+              <div className="hidden md:flex items-center gap-8">
+                <a href="#services" className="text-sm text-slate-300 hover:text-white transition-colors">Services</a>
+                <a href="#partners" className="text-sm text-slate-300 hover:text-white transition-colors">Partners</a>
+                <a href="#contact" className="text-sm text-slate-300 hover:text-white transition-colors">Contact</a>
+                <a href="https://islandhub.app" target="_blank" className="text-sm font-medium text-emerald-400 hover:text-emerald-300">
+                  IslandHub →
+                </a>
+              </div>
+              {/* Mobile menu button */}
+              <button className="md:hidden p-2 text-slate-300 hover:text-white">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
