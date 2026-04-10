@@ -8,11 +8,11 @@ if (!DATABASE_URL) {
 
 export const sql = neon(DATABASE_URL);
 
-export async function testConnection() {
+export async function testConnection(): Promise<{ success: true; now: Date; version: string } | { success: false; error: string }> {
   try {
     const result = await sql`SELECT NOW() as now, version() as version`;
     console.log('Database connected:', result[0]);
-    return { success: true, ...result[0] };
+    return { success: true, now: result[0].now, version: result[0].version };
   } catch (error) {
     console.error('Database connection failed:', error);
     return { success: false, error: String(error) };
