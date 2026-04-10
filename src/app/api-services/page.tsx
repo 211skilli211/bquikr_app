@@ -35,6 +35,30 @@ const apiServices = [
     method: 'POST',
     example: { domain: 'company.com', limit: 10 },
   },
+  {
+    id: 'poi',
+    name: 'POI Discovery',
+    description: 'Find points of interest - beaches, waterfalls, restaurants',
+    endpoint: '/api/services/poi',
+    method: 'GET',
+    example: { island: 'Jamaica', category: 'beach' },
+  },
+  {
+    id: 'marine',
+    name: 'Marine Conditions',
+    description: 'Get beach water temperature, wave height, safety flags',
+    endpoint: '/api/services/marine',
+    method: 'GET',
+    example: { lat: 18.2208, lng: -66.5901 },
+  },
+  {
+    id: 'weather',
+    name: 'Weather',
+    description: 'Real-time Caribbean weather data with caching',
+    endpoint: '/api/services/weather',
+    method: 'GET',
+    example: { lat: 18.2208, lng: -66.5901 },
+  },
 ];
 
 export default function APIServicesPage() {
@@ -53,14 +77,25 @@ export default function APIServicesPage() {
     setResponse('Testing...');
 
     try {
-      const res = await fetch(selectedService.endpoint, {
-        method: 'POST',
+      const options: RequestInit = {
+        method: selectedService.method,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${apiKey}`,
         },
-        body: JSON.stringify(selectedService.example),
-      });
+      };
+
+      if (selectedService.method !== 'GET') {
+        options.body = JSON.stringify(selectedService.example);
+      } else {
+        const params = new URLSearchParams();
+        Object.entries(selectedService.example).forEach(([key, value]) => {
+          params.append(key, value as string);
+        });
+        selectedService.endpoint = `${selectedService.endpoint}?${params.toString()}`;
+      }
+
+      const res = await fetch(selectedService.endpoint, options);
 
       const data = await res.json();
       setResponse(JSON.stringify(data, null, 2));
@@ -126,8 +161,12 @@ export default function APIServicesPage() {
           <h2 className="text-xl font-semibold text-slate-200 mb-4">Endpoint Details</h2>
           <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
             <div className="mb-4">
-              <span className="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded">POST</span>
-              <code className="ml-2 text-cyan-400 text-sm">{selectedService.endpoint}</code>
+              <span className={`text-xs px-2 py-1 rounded ${
+                selectedService.method === 'GET' 
+                  ? 'bg-blue-500/20 text-blue-400' 
+                  : 'bg-emerald-500/20 text-emerald-400'
+              }`}>{selectedService.method}</span>
+              <code className="ml-2 text-cyan-400 text-sm">{selectedService.endpoint.split('?')[0]}</code>
             </div>
 
             <div className="mb-4">
