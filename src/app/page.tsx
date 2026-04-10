@@ -105,10 +105,10 @@ export default function Home() {
 
   const partners = [
     { name: 'IslandHub', type: 'Marketplace', image: 'https://images.unsplash.com/photo-1556740758-90de374c12ad?w=400&h=200&fit=crop', href: 'https://islandhub-9itk6wkoc-rpskilli211-3018s-projects.vercel.app/' },
-    { name: 'CTC Marketplace', type: 'Marketplace', image: 'https://images.unsplash.com/photo-1472851294608-062f824d29ab?w=400&h=200&fit=crop', href: '#' },
+    { name: 'CTC Marketplace', type: 'Marketplace', image: 'https://images.unsplash.com/photo-1557821552-17105176666c?w=400&h=200&fit=crop', href: '#' },
     { name: 'Graphic Trends', type: 'Services', image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=200&fit=crop', href: '#' },
     { name: 'IBT Financial', type: 'Fintech', image: 'https://images.unsplash.com/photo-1563013544-824ae1b70457?w=400&h=200&fit=crop', href: '#' },
-    { name: 'Eloh Processing', type: 'Payments', image: 'https://images.unsplash.com/photo-1551288049-beb4b4c8ab04?w=400&h=200&fit=crop', href: '#' },
+    { name: 'Eloh Processing', type: 'Payments', image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=200&fit=crop', href: '#' },
   ];
 
   const whyChooseUs = [
