@@ -250,6 +250,78 @@ export default function Home() {
         </div>
       </section>
 
+      {/* IslandHub Marketplace Feature */}
+      <section className="py-24 bg-gradient-to-b from-slate-950 to-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Image */}
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 rounded-3xl blur-2xl" />
+              <img 
+                src="https://images.unsplash.com/photo-1556742049-0c23a967e053?w=800&h=600&fit=crop"
+                alt="IslandHub Marketplace"
+                className="relative rounded-2xl shadow-2xl border border-slate-800"
+              />
+              {/* Floating badge */}
+              <div className="absolute -bottom-6 -right-6 px-6 py-3 bg-cyan-500 rounded-xl shadow-lg">
+                <span className="text-slate-900 font-bold">Marketplace Live</span>
+              </div>
+            </div>
+            
+            {/* Right - Content */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm mb-6">
+                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                Featured Platform
+              </div>
+              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+                Meet <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">IslandHub</span>
+              </h2>
+              <p className="text-lg text-slate-300 mb-8">
+                Your complete Caribbean marketplace. Buy, sell, and connect with vendors across the region. 
+                From local artisans to island-wide delivery — everything you need in one platform.
+              </p>
+              
+              {/* Features */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                {[
+                  'Vendor Stores & Listings',
+                  'Food & Grocery Delivery',
+                  'Ride & Transport Services',
+                  'Local Services & Bookings',
+                  'Auction System',
+                  'Secure Payments'
+                ].map((feature) => (
+                  <div key={feature} className="flex items-center gap-3">
+                    <svg className="w-5 h-5 text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-slate-300 text-sm">{feature}</span>
+                  </div>
+                ))}
+              </div>
+              
+              {/* CTA */}
+              <div className="flex flex-wrap gap-4">
+                <a 
+                  href="https://islandhub.app" 
+                  target="_blank"
+                  className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-xl transition-all hover:shadow-lg hover:shadow-cyan-500/25"
+                >
+                  Explore IslandHub →
+                </a>
+                <a 
+                  href="#contact"
+                  className="px-8 py-4 border border-slate-700 hover:border-slate-600 text-white font-medium rounded-xl transition-all"
+                >
+                  Become a Vendor
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Partners Section */}
       <section id="partners" className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
