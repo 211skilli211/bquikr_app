@@ -72,7 +72,7 @@ export default function Home() {
     {
       title: 'AI Digital Influencer',
       description: 'Create AI-powered influencers with authentic Caribbean accents. Full setup including voice cloning for marketing and social media.',
-      image: 'https://images.unsplash.com/photo-1557804506-669a679dbae4?w=800&h=600&fit=crop',
+      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop',
       tags: ['Voice Cloning', 'Multi-Platform', '24/7'],
       href: '/influencer',
       comingSoon: true,
@@ -80,7 +80,7 @@ export default function Home() {
     {
       title: 'Business APIs',
       description: 'Powerful APIs for data conversion, accounting, inventory management and business automation.',
-      image: 'https://images.unsplash.com/photo-1551288049-beb4b4c8ab04?w=800&h=600&fit=crop',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
       tags: ['Data→Spreadsheet', 'Accounting', 'Inventory'],
       href: '/api-services',
       comingSoon: false,
@@ -88,7 +88,7 @@ export default function Home() {
     {
       title: 'Regional Intel',
       description: 'Location intelligence and geospatial analytics for Caribbean businesses and tourism.',
-      image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&h=600&fit=crop',
+      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
       tags: ['Mapping', 'Analytics', 'Tourism'],
       href: '/geospatial',
       comingSoon: false,
@@ -96,7 +96,7 @@ export default function Home() {
     {
       title: 'B2B Connectivity',
       description: 'API integration for regional businesses and telecom partnerships.',
-      image: 'https://images.unsplash.com/photo-1553877522-4329d397e09b?w=800&h=600&fit=crop',
+      image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop',
       tags: ['Telecom', 'Enterprise', 'Integration'],
       href: '#',
       comingSoon: true,
@@ -104,11 +104,11 @@ export default function Home() {
   ];
 
   const partners = [
-    { name: 'IslandHub', type: 'Marketplace', image: 'https://images.unsplash.com/photo-1559523161-0fc0d8b38a7f?w=400&h=200&fit=crop', href: 'https://islandhub.app' },
-    { name: 'CTC Marketplace', type: 'Marketplace', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=200&fit=crop', href: '#' },
-    { name: 'Graphic Trends', type: 'Services', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=200&fit=crop', href: '#' },
-    { name: 'IBT Financial', type: 'Fintech', image: 'https://images.unsplash.com/photo-1556742049-0c23a967e053?w=400&h=200&fit=crop', href: '#' },
-    { name: 'Elon Processing', type: 'Payments', image: 'https://images.unsplash.com/photo-1621761191319-c62fb2d591b6?w=400&h=200&fit=crop', href: '#' },
+    { name: 'IslandHub', type: 'Marketplace', image: 'https://images.unsplash.com/photo-1556740758-90de374c12ad?w=400&h=200&fit=crop', href: 'https://islandhub-9itk6wkoc-rpskilli211-3018s-projects.vercel.app/' },
+    { name: 'CTC Marketplace', type: 'Marketplace', image: 'https://images.unsplash.com/photo-1472851294608-062f824d29ab?w=400&h=200&fit=crop', href: '#' },
+    { name: 'Graphic Trends', type: 'Services', image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=200&fit=crop', href: '#' },
+    { name: 'IBT Financial', type: 'Fintech', image: 'https://images.unsplash.com/photo-1563013544-824ae1b70457?w=400&h=200&fit=crop', href: '#' },
+    { name: 'Eloh Processing', type: 'Payments', image: 'https://images.unsplash.com/photo-1551288049-beb4b4c8ab04?w=400&h=200&fit=crop', href: '#' },
   ];
 
   const whyChooseUs = [
@@ -147,7 +147,7 @@ export default function Home() {
                 <a href="#services" className="text-sm text-slate-300 hover:text-white transition-colors">Services</a>
                 <a href="#partners" className="text-sm text-slate-300 hover:text-white transition-colors">Partners</a>
                 <a href="#contact" className="text-sm text-slate-300 hover:text-white transition-colors">Contact</a>
-                <a href="https://islandhub.app" target="_blank" className="text-sm font-medium text-emerald-400 hover:text-emerald-300">
+                <a href="https://islandhub-9itk6wkoc-rpskilli211-3018s-projects.vercel.app/" target="_blank" className="text-sm font-medium text-emerald-400 hover:text-emerald-300">
                   IslandHub →
                 </a>
               </div>
@@ -166,7 +166,7 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center justify-center pt-16">
         <div className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1569020586994-57e06169d5c9?w=1920&h=1080&fit=crop" 
+            src="https://images.unsplash.com/photo-1519608487953-e999c86e7555?w=1920&h=1080&fit=crop" 
             alt="Caribbean Business"
             className="w-full h-full object-cover opacity-30"
           />
@@ -258,7 +258,7 @@ export default function Home() {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 rounded-3xl blur-2xl" />
               <img 
-                src="https://images.unsplash.com/photo-1556742049-0c23a967e053?w=800&h=600&fit=crop"
+                src="https://images.unsplash.com/photo-1556740758-90de374c12ad?w=800&h=600&fit=crop"
                 alt="IslandHub Marketplace"
                 className="relative rounded-2xl shadow-2xl border border-slate-800"
               />
@@ -304,7 +304,7 @@ export default function Home() {
               {/* CTA */}
               <div className="flex flex-wrap gap-4">
                 <a 
-                  href="https://islandhub.app" 
+                  href="https://islandhub-9itk6wkoc-rpskilli211-3018s-projects.vercel.app/" 
                   target="_blank"
                   className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-xl transition-all hover:shadow-lg hover:shadow-cyan-500/25"
                 >
