@@ -14,9 +14,7 @@
     "react-dom": "19.2.4",
     "pg": "^8.11.3",
     "@neondatabase/serverless": "^0.9.0",
-    "cesium": "^1.114.0",
-    "@cesium/engine": "^8.0.0",
-    "@cesium/react": "^0.0.0"
+    "cesium": "^1.114.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
