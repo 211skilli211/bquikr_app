@@ -44,8 +44,8 @@ export default function GeospatialPage() {
           sql`SELECT * FROM ibt_pois LIMIT 100`
         ]);
         
-        setLocations(locResult);
-        setPois(poiResult);
+        setLocations(locResult as Location[]);
+        setPois(poiResult as POI[]);
         
         const cats = [...new Set(locResult.map(l => l.category).filter(Boolean))];
         setCategories(cats);

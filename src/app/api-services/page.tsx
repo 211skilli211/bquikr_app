@@ -59,6 +59,22 @@ const apiServices = [
     method: 'GET',
     example: { lat: 18.2208, lng: -66.5901 },
   },
+  {
+    id: 'currency',
+    name: 'Currency Exchange',
+    description: 'Convert between Caribbean and world currencies',
+    endpoint: '/api/services/currency',
+    method: 'GET',
+    example: { from: 'USD', to: 'JMD', amount: 100 },
+  },
+  {
+    id: 'events',
+    name: 'Caribbean Events',
+    description: 'Discover festivals, concerts, sports events across Caribbean',
+    endpoint: '/api/services/events',
+    method: 'GET',
+    example: { category: 'Festival', location: 'Trinidad' },
+  },
 ];
 
 export default function APIServicesPage() {
