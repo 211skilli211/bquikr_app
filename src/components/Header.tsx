@@ -1,14 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent | TouchEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-lg border-b border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="fixed top-0 left-0 right-0 z-[9999] bg-slate-950/95 backdrop-blur-lg border-b border-slate-800">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
@@ -27,8 +42,14 @@ export default function Header() {
           </nav>
 
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-slate-300"
+            type="button"
+            aria-label="Toggle menu"
+            aria-expanded={isOpen}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(!isOpen);
+            }}
+            className="md:hidden min-w-[44px] min-h-[44px] p-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors flex items-center justify-center"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isOpen ? (
@@ -41,11 +62,11 @@ export default function Header() {
         </div>
 
         {isOpen && (
-          <nav className="md:hidden py-4 border-t border-slate-800 space-y-2">
-            <Link href="/#services" onClick={() => setIsOpen(false)} className="block py-2 text-slate-300">Services</Link>
-            <Link href="/#partners" onClick={() => setIsOpen(false)} className="block py-2 text-slate-300">Partners</Link>
-            <Link href="/#contact" onClick={() => setIsOpen(false)} className="block py-2 text-slate-300">Contact</Link>
-            <a href="https://islandhub.app" target="_blank" className="block py-2 text-emerald-400 font-medium">IslandHub →</a>
+          <nav ref={menuRef} className="md:hidden py-4 border-t border-slate-800 space-y-1 animate-in slide-in-from-top-2">
+            <Link href="/#services" onClick={() => setIsOpen(false)} className="block py-3 px-4 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">Services</Link>
+            <Link href="/#partners" onClick={() => setIsOpen(false)} className="block py-3 px-4 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">Partners</Link>
+            <Link href="/#contact" onClick={() => setIsOpen(false)} className="block py-3 px-4 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">Contact</Link>
+            <a href="https://islandhub.app" target="_blank" className="block py-3 px-4 text-emerald-400 font-medium hover:bg-slate-800 rounded-lg">IslandHub →</a>
           </nav>
         )}
       </div>
