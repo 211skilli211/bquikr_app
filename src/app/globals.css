@@ -1,32 +1,418 @@
 @import "tailwindcss";
 
+/* ============================================
+   DESIGN.md Design System Tokens
+   IBT Solutions & IslandHub
+   ============================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --- Core Colors (Ocean) --- */
+  --ocean-900: #0A1628;
+  --ocean-800: #0F2744;
+  --ocean-700: #1A3A5C;
+  --ocean-600: #264D73;
+  --ocean-500: #0066CC;
+  --ocean-400: #3388E0;
+  --ocean-300: #80B3E8;
+  
+  /* --- Accent Colors (Sunset) --- */
+  --sunset-600: #D94E1F;
+  --sunset-500: #FF6B35;
+  --sunset-400: #FF8A5C;
+  --coral-500: #FF6B6B;
+  --turquoise-500: #40E0D0;
+  
+  /* --- Neutral Colors (Sand) --- */
+  --sand-50: #FDFBF7;
+  --sand-100: #F5EFE6;
+  --sand-200: #E8DFD0;
+  --sand-300: #C9BBA8;
+  
+  /* --- Semantic Colors --- */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --info: #3B82F6;
+
+  /* --- Dark Mode (Default) --- */
+  --bg-primary: #0A1628;
+  --bg-secondary: #0F2744;
+  --bg-tertiary: #1A3A5C;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #64748B;
+  --border: #264D73;
+
+  /* --- Default Background --- */
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
 }
+
+/* Light Mode */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F8FAFC;
+    --bg-tertiary: #F1F5F9;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --border: #E2E8F0;
+    
+    --background: var(--bg-primary);
+    --foreground: var(--text-primary);
+  }
+}
+
+/* Manual Light Mode Override */
+.light {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8FAFC;
+  --bg-tertiary: #F1F5F9;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --border: #E2E8F0;
+  
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+}
+
+/* Manual Dark Mode */
+.dark {
+  --bg-primary: #0A1628;
+  --bg-secondary: #0F2744;
+  --bg-tertiary: #1A3A5C;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #64748B;
+  --border: #264D73;
+  
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+}
+
+/* Theme Modes */
+.theme-ocean {
+  --ocean-500: #0066CC;
+  --ocean-600: #0052A3;
+}
+
+.theme-sunset {
+  --ocean-500: #FF6B35;
+  --ocean-600: #D94E1F;
+}
+
+.theme-emerald {
+  --ocean-500: #2D5A27;
+  --ocean-600: #1E3D1A;
+}
+
+.theme-coral {
+  --ocean-500: #40E0D0;
+  --ocean-600: #2BA8A0;
+}
+
+/* ============================================
+   Tailwind Theme Configuration
+   ============================================ */
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Design System Colors */
+  --color-ocean-900: var(--ocean-900);
+  --color-ocean-800: var(--ocean-800);
+  --color-ocean-700: var(--ocean-700);
+  --color-ocean-600: var(--ocean-600);
+  --color-ocean-500: var(--ocean-500);
+  --color-ocean-400: var(--ocean-400);
+  --color-ocean-300: var(--ocean-300);
+  
+  --color-sunset-600: var(--sunset-600);
+  --color-sunset-500: var(--sunset-500);
+  --color-sunset-400: var(--sunset-400);
+  --color-coral-500: var(--coral-500);
+  --color-turquoise-500: var(--turquoise-500);
+  
+  --color-sand-50: var(--sand-50);
+  --color-sand-100: var(--sand-100);
+  --color-sand-200: var(--sand-200);
+  --color-sand-300: var(--sand-300);
+  
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+  
+  /* Semantic */
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ============================================
+   Typography Scale
+   ============================================ */
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   scroll-behavior: smooth;
+  line-height: 1.6;
 }
 
-/* Custom Animations */
+/* Type Scale Classes */
+h1, .text-display {
+  font-size: 3rem;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+h2, .text-h1 {
+  font-size: 2.25rem;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+h3, .text-h2 {
+  font-size: 1.875rem;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+h4, .text-h3 {
+  font-size: 1.5rem;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.text-body-lg {
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.text-body {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.text-body-sm {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.text-caption {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.text-overline {
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Monospace */
+code, .font-mono {
+  font-family: 'Geist Mono', 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ============================================
+   Spacing Scale
+   ============================================ */
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+}
+
+/* ============================================
+   Border Radius
+   ============================================ */
+
+:root {
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+}
+
+/* ============================================
+   Shadows
+   ============================================ */
+
+:root {
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1);
+  --shadow-glow: 0 0 40px rgba(0, 102, 204, 0.3);
+  --shadow-glow-sunset: 0 0 40px rgba(255, 107, 53, 0.3);
+}
+
+/* ============================================
+   Gradients
+   ============================================ */
+
+.gradient-hero {
+  background: linear-gradient(135deg, var(--ocean-900) 0%, var(--ocean-800) 50%, var(--sunset-600) 100%);
+}
+
+.gradient-card {
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+}
+
+.gradient-accent {
+  background: radial-gradient(circle at center, var(--ocean-500 / 0.2) 0%, transparent 70%);
+}
+
+/* ============================================
+   Component Styles
+   ============================================ */
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--ocean-500);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--ocean-400);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid var(--ocean-500);
+  color: var(--ocean-500);
+}
+
+.btn-secondary:hover {
+  background: var(--ocean-500);
+  color: white;
+}
+
+.btn-accent {
+  background: var(--sunset-500);
+  color: white;
+}
+
+.btn-accent:hover {
+  background: var(--sunset-400);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* Cards */
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--ocean-500);
+}
+
+/* Form Inputs */
+.input {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--ocean-500);
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+}
+
+.badge-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+}
+
+.badge-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error);
+}
+
+.badge-info {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--info);
+}
+
+/* ============================================
+   Custom Animations
+   ============================================ */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -78,6 +464,15 @@ body {
   }
 }
 
+@keyframes suddenDeath {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+}
+
 /* Animation Classes */
 .animate-fadeIn {
   animation: fadeIn 0.6s ease-out forwards;
@@ -98,6 +493,10 @@ body {
   animation: float 3s ease-in-out infinite;
 }
 
+.animate-suddenDeath {
+  animation: suddenDeath 1s ease-in-out infinite;
+}
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
@@ -109,20 +508,20 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: var(--bg-secondary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: var(--ocean-600);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: var(--ocean-500);
 }
 
 /* Selection color */
 ::selection {
-  background: rgba(34, 211, 238, 0.3);
+  background: rgba(0, 102, 204, 0.3);
   color: white;
 }
