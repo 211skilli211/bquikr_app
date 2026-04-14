@@ -1,0 +1,390 @@
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+
+interface Service {
+  id: string;
+  title: string;
+  shortTitle: string;
+  description: string;
+  icon: string;
+  color: string;
+  gradient: string;
+  href: string;
+  category: 'tourism' | 'business' | 'audit' | 'web-dev' | 'ai';
+  features: string[];
+  whiteLabel: boolean;
+  comingSoon?: boolean;
+}
+
+const services: Service[] = [
+  {
+    id: 'tourism-apis',
+    title: 'Tourism APIs',
+    shortTitle: 'Tourism',
+    description: 'Caribbean-focused APIs for tourism businesses - currency exchange, events, geospatial mapping, and more.',
+    icon: '🏝️',
+    color: 'cyan',
+    gradient: 'from-cyan-500 to-emerald-500',
+    href: '/services/tourism',
+    category: 'tourism',
+    features: ['Currency Exchange API', 'Caribbean Events API', 'Geospatial Mapping', 'Tourism Analytics'],
+    whiteLabel: true,
+  },
+  {
+    id: 'business-apis',
+    title: 'Business APIs',
+    shortTitle: 'Business',
+    description: 'Powerful APIs for data conversion, accounting, inventory management and business automation.',
+    icon: '💼',
+    color: 'blue',
+    gradient: 'from-blue-500 to-indigo-500',
+    href: '/services/business',
+    category: 'business',
+    features: ['Data↔Spreadsheet API', 'Accounting Integration', 'Inventory Management', 'Business Automation'],
+    whiteLabel: true,
+  },
+  {
+    id: 'business-audit',
+    title: 'Business Auditing',
+    shortTitle: 'Audit',
+    description: 'Comprehensive business scoring - SEO analysis, Google Maps profile verification, website quality audits.',
+    icon: '🔍',
+    color: 'amber',
+    gradient: 'from-amber-500 to-orange-500',
+    href: '/services/audit',
+    category: 'audit',
+    features: ['SEO Score Analysis', 'Google Maps Profile Check', 'Website Quality Audit', 'Social Presence Score'],
+    whiteLabel: true,
+  },
+  {
+    id: 'web-dev',
+    title: 'Website Development',
+    shortTitle: 'Web Dev',
+    description: 'Build new websites for businesses without one, or optimize and refine existing websites.',
+    icon: '🌐',
+    color: 'emerald',
+    gradient: 'from-emerald-500 to-teal-500',
+    href: '/services/web-dev',
+    category: 'web-dev',
+    features: ['New Website Build', 'Website Optimization', 'SEO Enhancement', 'Performance Tuning'],
+    whiteLabel: true,
+  },
+  {
+    id: 'ai-marketing',
+    title: 'AI Marketing',
+    shortTitle: 'AI Marketing',
+    description: 'AI-powered marketing campaigns, content generation, and automated outreach.',
+    icon: '📢',
+    color: 'rose',
+    gradient: 'from-rose-500 to-pink-500',
+    href: '/services/ai/marketing',
+    category: 'ai',
+    features: ['Campaign Automation', 'Content Generation', 'Audience Targeting', 'Performance Analytics'],
+    whiteLabel: true,
+  },
+  {
+    id: 'ai-influencer',
+    title: 'AI Digital Influencer',
+    shortTitle: 'Influencer',
+    description: 'Create AI-powered influencers with authentic Caribbean accents for marketing and social media.',
+    icon: '🎭',
+    color: 'violet',
+    gradient: 'from-violet-500 to-purple-500',
+    href: '/services/ai/influencer',
+    category: 'ai',
+    features: ['Voice Cloning', 'Multi-Platform', '24/7 Operation', 'Authentic Caribbean Accent'],
+    whiteLabel: true,
+  },
+  {
+    id: 'mirofish-ai',
+    title: 'MiroFish AI',
+    shortTitle: 'MiroFish',
+    description: 'AI-powered crowd simulation and demographic analysis for events and locations.',
+    icon: '🐟',
+    color: 'teal',
+    gradient: 'from-teal-500 to-cyan-500',
+    href: '/services/ai/mirofish',
+    category: 'ai',
+    features: ['Crowd Simulation', 'Demographic Analysis', 'Event Planning', 'Location Analytics'],
+    whiteLabel: true,
+  },
+  {
+    id: 'ask-maps',
+    title: 'Ask Maps',
+    shortTitle: 'Ask Maps',
+    description: 'AI-powered business Q&A using Google Maps data - find businesses, reviews, and local insights.',
+    icon: '🗺️',
+    color: 'indigo',
+    gradient: 'from-indigo-500 to-blue-500',
+    href: '/services/ai/ask-maps',
+    category: 'ai',
+    features: ['Business Search', 'Review Analysis', 'Local Insights', 'AI Q&A Interface'],
+    whiteLabel: true,
+  },
+  {
+    id: 'developer',
+    title: 'Developer Portal',
+    shortTitle: 'API Access',
+    description: 'API keys, usage statistics, sandbox testing, and full developer documentation.',
+    icon: '🔧',
+    color: 'slate',
+    gradient: 'from-slate-500 to-zinc-500',
+    href: '/services/api',
+    category: 'business',
+    features: ['API Keys', 'Usage Analytics', 'Sandbox Testing', 'Full Documentation'],
+    whiteLabel: false,
+  },
+];
+
+const categories = [
+  { id: 'all', label: 'All Services', icon: '✨' },
+  { id: 'tourism', label: 'Tourism', icon: '🏝️' },
+  { id: 'business', label: 'Business', icon: '💼' },
+  { id: 'audit', label: 'Auditing', icon: '🔍' },
+  { id: 'web-dev', label: 'Web Dev', icon: '🌐' },
+  { id: 'ai', label: 'AI Solutions', icon: '🤖' },
+];
+
+function ServiceCard({ service, index }: { service: Service; index: number }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <Link
+      href={service.href}
+      className="group relative rounded-3xl overflow-hidden block"
+      style={{ animationDelay: `${index * 0.05}s` }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+      <div className="absolute inset-0 bg-slate-900 rounded-3xl border border-slate-800 group-hover:border-slate-700 transition-all">
+        <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+      </div>
+      
+      <div className="relative p-6 h-full flex flex-col min-h-[280px]">
+        <div className="flex items-start justify-between mb-4">
+          <div className={`w-14 h-14 rounded-2xl bg-${service.color}-500/20 flex items-center justify-center text-2xl backdrop-blur-sm`}>
+            {service.icon}
+          </div>
+          {service.whiteLabel && (
+            <span className="px-2 py-1 text-[10px] font-medium rounded-full bg-white/10 text-slate-400 backdrop-blur-sm">
+              White Label
+            </span>
+          )}
+          {service.comingSoon && (
+            <span className="px-2 py-1 text-[10px] font-medium rounded-full bg-amber-500/20 text-amber-400 backdrop-blur-sm">
+              Coming Soon
+            </span>
+          )}
+        </div>
+        
+        <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
+        <p className="text-slate-400 text-sm mb-4 flex-1">{service.description}</p>
+        
+        <div className="flex flex-wrap gap-2 mb-4">
+          {service.features.slice(0, 3).map((feature) => (
+            <span key={feature} className="px-2 py-1 text-[10px] rounded-full bg-slate-800 text-slate-400">
+              {feature}
+            </span>
+          ))}
+          {service.features.length > 3 && (
+            <span className="px-2 py-1 text-[10px] rounded-full bg-slate-800 text-slate-500">
+              +{service.features.length - 3} more
+            </span>
+          )}
+        </div>
+        
+        <div className="flex items-center text-sm font-medium text-white mt-auto">
+          <span>Explore Service</span>
+          <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export default function ServicesPage() {
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [email, setEmail] = useState('');
+  const [formStatus, setFormStatus] = useState('');
+
+  const filteredServices = activeCategory === 'all' 
+    ? services 
+    : services.filter(s => s.category === activeCategory);
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus('Thanks for your interest! We\'ll contact you within 24 hours.');
+    setEmail('');
+  };
+
+  return (
+    <div className="bg-slate-950 min-h-screen">
+      {/* Animated Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[128px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-[128px]" />
+      </div>
+
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-lg border-b border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-2">
+              <Link href="/" className="flex items-center gap-2">
+                <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                  IBT
+                </span>
+                <span className="text-sm text-slate-500 font-medium">Solutions</span>
+              </Link>
+            </div>
+            <div className="flex items-center gap-6">
+              <Link href="/services" className="text-sm text-emerald-400 font-medium">Services</Link>
+              <Link href="https://islandhub.co" target="_blank" className="text-sm text-slate-300 hover:text-white transition-colors">
+                Platform
+              </Link>
+              <Link href="#contact" className="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-900 text-sm font-medium rounded-lg transition-colors">
+                Contact
+              </Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="inline-block px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-sm mb-6">
+              Our Services
+            </span>
+            <h1 className="text-4xl sm:text-6xl font-bold text-white mb-6">
+              Solutions for
+              <br />
+              <span className="bg-gradient-to-r from-cyan-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                Modern Business
+              </span>
+            </h1>
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+              From Tourism APIs to AI-powered solutions - comprehensive tools designed specifically for Caribbean businesses. 
+              White-label ready for partners and resellers.
+            </p>
+          </div>
+
+          {/* Category Filter */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  activeCategory === cat.id
+                    ? 'bg-cyan-500 text-slate-900'
+                    : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700'
+                }`}
+              >
+                <span>{cat.icon}</span>
+                <span>{cat.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Grid */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredServices.map((service, index) => (
+              <ServiceCard key={service.id} service={service} index={index} />
+            ))}
+          </div>
+
+          {filteredServices.length === 0 && (
+            <div className="text-center py-20">
+              <p className="text-slate-400">No services found in this category.</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* White Label CTA */}
+      <section className="py-20 border-t border-slate-800">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-12 text-center border border-slate-700">
+            <h2 className="text-3xl font-bold text-white mb-4">Partner with IBT Solutions</h2>
+            <p className="text-slate-400 mb-8 max-w-xl mx-auto">
+              All our services are white-label ready. Partner with us to deliver premium solutions under your brand. 
+              Reseller packages available for agencies and consultants.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link 
+                href="/services/pricing" 
+                className="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-medium rounded-xl transition-colors"
+              >
+                View Partner Pricing
+              </Link>
+              <Link 
+                href="#contact" 
+                className="px-6 py-3 border border-slate-700 hover:border-slate-600 text-white font-medium rounded-xl transition-colors"
+              >
+                Contact Us
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 border-t border-slate-800">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">Get in Touch</h2>
+            <p className="text-slate-400">Have questions about our services? We&apos;ll get back to you within 24 hours.</p>
+          </div>
+          
+          <form onSubmit={handleContactSubmit} className="space-y-4">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className="w-full px-6 py-4 bg-slate-900 border border-slate-800 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500 transition-colors"
+              required
+            />
+            <button
+              type="submit"
+              className="w-full px-6 py-4 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-xl transition-colors"
+            >
+              Request Information
+            </button>
+            {formStatus && (
+              <p className="text-center text-emerald-400 text-sm">{formStatus}</p>
+            )}
+          </form>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 border-t border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                IBT
+              </span>
+              <span className="text-sm text-slate-500">Solutions</span>
+            </div>
+            <p className="text-sm text-slate-500">
+              © 2025 IBT Solutions. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
