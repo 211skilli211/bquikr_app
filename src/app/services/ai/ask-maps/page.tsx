@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { submitServiceInquiry } from '@/lib/api';
 
 const askExamples = [
   { q: 'What are the best beaches near me?', a: 'Based on your location (St. Lucia), the top-rated beaches are' },
@@ -33,8 +34,17 @@ export default function AskMapsPage() {
     }, 1500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    await submitServiceInquiry({
+      service_type: 'ask-maps',
+      name: 'Ask Maps Visitor',
+      email: email,
+      source: 'bquikr',
+      message: 'Interested in Ask Maps API integration'
+    });
+    
     setFormStatus('Thanks! We\'ll contact you within 24 hours.');
     setEmail('');
   };

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { submitServiceInquiry } from '@/lib/api';
 
 const tourismAPIs = [
   {
@@ -59,8 +60,17 @@ export default function TourismPage() {
   const [email, setEmail] = useState('');
   const [formStatus, setFormStatus] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    await submitServiceInquiry({
+      service_type: 'tourism-api',
+      name: 'API Visitor',
+      email: email,
+      source: 'bquikr',
+      message: 'Interested in Tourism APIs'
+    });
+    
     setFormStatus('Thanks! Check your email for API access.');
     setEmail('');
   };

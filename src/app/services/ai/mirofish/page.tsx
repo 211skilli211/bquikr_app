@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { submitServiceInquiry } from '@/lib/api';
 
 export default function MiroFishPage() {
   const [email, setEmail] = useState('');
@@ -24,8 +25,17 @@ export default function MiroFishPage() {
     { title: 'Transportation Hubs', icon: '✈️' },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    await submitServiceInquiry({
+      service_type: 'mirofish',
+      name: 'MiroFish Visitor',
+      email: email,
+      source: 'bquikr',
+      message: 'Interested in MiroFish AI crowd simulation'
+    });
+    
     setFormStatus('Thanks! We\'ll contact you within 24 hours.');
     setEmail('');
   };

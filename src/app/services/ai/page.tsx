@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { submitServiceInquiry } from '@/lib/api';
 
 const aiServices = [
   {
@@ -58,8 +59,17 @@ export default function AIPage() {
   const [email, setEmail] = useState('');
   const [formStatus, setFormStatus] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    await submitServiceInquiry({
+      service_type: 'ai',
+      name: 'AI Visitor',
+      email: email,
+      source: 'bquikr',
+      message: 'Interested in AI services'
+    });
+    
     setFormStatus('Thanks! We\'ll contact you within 24 hours.');
     setEmail('');
   };

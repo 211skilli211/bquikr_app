@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { submitServiceInquiry } from '@/lib/api';
 
 const businessAPIs = [
   {
@@ -53,8 +54,17 @@ export default function BusinessPage() {
   const [email, setEmail] = useState('');
   const [formStatus, setFormStatus] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    await submitServiceInquiry({
+      service_type: 'business-api',
+      name: 'API Visitor',
+      email: email,
+      source: 'bquikr',
+      message: 'Interested in Business APIs'
+    });
+    
     setFormStatus('Thanks! Check your email for API access.');
     setEmail('');
   };

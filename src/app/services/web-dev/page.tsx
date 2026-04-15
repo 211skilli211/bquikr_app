@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { submitServiceInquiry } from '@/lib/api';
 
 const webServices = [
   {
@@ -52,8 +53,17 @@ const webServices = [
 export default function WebDevPage() {
   const [email, setEmail] = useState('');
   const [formStatus, setFormStatus] = useState('');
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    await submitServiceInquiry({
+      service_type: 'web-dev',
+      name: 'Website Visitor',
+      email: email,
+      source: 'bquikr',
+      message: 'Interested in website development services'
+    });
+    
     setFormStatus('Thanks! We\'ll contact you within 24 hours.');
     setEmail('');
   };

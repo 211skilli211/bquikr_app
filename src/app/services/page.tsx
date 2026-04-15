@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { submitServiceInquiry } from '@/lib/api';
 
 interface Service {
   id: string;
@@ -216,8 +217,16 @@ export default function ServicesPage() {
     ? services 
     : services.filter(s => s.category === activeCategory);
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    await submitServiceInquiry({
+      service_type: 'general',
+      name: 'Website Visitor',
+      email: email,
+      source: 'bquikr'
+    });
+    
     setFormStatus('Thanks for your interest! We\'ll contact you within 24 hours.');
     setEmail('');
   };

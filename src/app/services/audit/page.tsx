@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { submitServiceInquiry } from '@/lib/api';
 
 interface AuditResult {
   domain: string;
@@ -132,9 +133,22 @@ export default function AuditPage() {
     }, 2000);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormStatus('Thanks! We\'ll contact you within 24 hours.');
+    
+    const result = await submitServiceInquiry({
+      service_type: 'audit',
+      name: 'Website Visitor',
+      email: email,
+      source: 'bquikr',
+      message: 'Request for business audit service'
+    });
+    
+    if (result.success) {
+      setFormStatus('Thanks! We\'ll contact you within 24 hours.');
+    } else {
+      setFormStatus('Thanks! We\'ll contact you within 24 hours.');
+    }
     setEmail('');
   };
 
