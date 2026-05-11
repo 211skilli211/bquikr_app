@@ -7,7 +7,7 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <a 
+    <Link 
       href={service.href || '#'}
       className="group relative rounded-2xl overflow-hidden block"
       style={{
@@ -40,7 +40,7 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
           </span>
         )}
       </div>
-    </a>
+    </Link>
   );
 }
 
@@ -49,6 +49,7 @@ function PartnerCard({ partner }: { partner: any }) {
     <a
       href={partner.href}
       target="_blank"
+      rel="noopener noreferrer"
       className="group relative rounded-xl overflow-hidden"
     >
       <img 
@@ -68,6 +69,7 @@ function PartnerCard({ partner }: { partner: any }) {
 export default function Home() {
   const [email, setEmail] = useState('');
   const [formStatus, setFormStatus] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const services = [
     {
@@ -75,13 +77,13 @@ export default function Home() {
       description: 'Create AI-powered influencers with authentic Caribbean accents. Full setup including voice cloning for marketing and social media.',
       image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop',
       tags: ['Voice Cloning', 'Multi-Platform', '24/7'],
-      href: '/influencer',
+      href: '/services/ai',
       comingSoon: true,
     },
     {
       title: 'Business APIs',
       description: 'Powerful APIs for data conversion, accounting, inventory management and business automation.',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
       tags: ['Data→Spreadsheet', 'Accounting', 'Inventory'],
       href: '/api-services',
       comingSoon: false,
@@ -97,7 +99,7 @@ export default function Home() {
     {
       title: 'B2B Connectivity',
       description: 'API integration for regional businesses and telecom partnerships.',
-      image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop',
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop',
       tags: ['Telecom', 'Enterprise', 'Integration'],
       href: '#',
       comingSoon: true,
@@ -105,11 +107,11 @@ export default function Home() {
   ];
 
   const partners = [
-    { name: 'IslandHub', type: 'Marketplace', image: 'https://images.unsplash.com/photo-1556740758-90de374c12ad?w=400&h=200&fit=crop', href: 'https://islandhub-9itk6wkoc-rpskilli211-3018s-projects.vercel.app/' },
-    { name: 'CTC Marketplace', type: 'Marketplace', image: 'https://images.unsplash.com/photo-1557821552-17105176666c?w=400&h=200&fit=crop', href: '#' },
-    { name: 'Graphic Trends', type: 'Services', image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=200&fit=crop', href: '#' },
-    { name: 'IBT Financial', type: 'Fintech', image: 'https://images.unsplash.com/photo-1563013544-824ae1b70457?w=400&h=200&fit=crop', href: '#' },
-    { name: 'Eloh Processing', type: 'Payments', image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=200&fit=crop', href: '#' },
+    { name: 'IslandHub', type: 'Marketplace', image: 'https://images.unsplash.com/photo-1556740758-90de374c12ad?w=400&h=200&fit=crop', href: 'https://islandhub-7dor6ly4p-rpskilli211-3018s-projects.vercel.app' },
+    { name: 'IBT Co-ops', type: 'Federation', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=200&fit=crop', href: '/coops' },
+    { name: 'Trades Co-op', type: 'Services', image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&h=200&fit=crop', href: '/coops/trades' },
+    { name: 'Micro-Farms', type: 'Agriculture', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=200&fit=crop', href: '/coops/micro-farms' },
+    { name: 'Graphic Trends', type: 'Manufacturing', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=200&fit=crop', href: '/coops/graphic-trends' },
   ];
 
   const whyChooseUs = [
@@ -137,25 +139,54 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-lg border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
                 IBT
               </span>
               <span className="text-sm text-slate-500 font-medium">Solutions</span>
+            </Link>
+            
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center gap-8">
+              <Link href="/services" className="text-sm text-slate-300 hover:text-white transition-colors">Services</Link>
+              <Link href="/coops" className="text-sm text-slate-300 hover:text-white transition-colors">IBT Co-ops</Link>
+              <Link href="#partners" className="text-sm text-slate-300 hover:text-white transition-colors">Partners</Link>
+              <Link href="#contact" className="text-sm text-slate-300 hover:text-white transition-colors">Contact</Link>
+              <a href="https://islandhub-7dor6ly4p-rpskilli211-3018s-projects.vercel.app" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-emerald-400 hover:text-emerald-300">
+                IslandHub →
+              </a>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="hidden md:flex items-center gap-8">
-                <Link href="/services" className="text-sm text-slate-300 hover:text-white transition-colors">Services</Link>
-                <Link href="/coops" className="text-sm text-slate-300 hover:text-white transition-colors">IBT Co-ops</Link>
-                <Link href="#partners" className="text-sm text-slate-300 hover:text-white transition-colors">Partners</Link>
-                <Link href="#contact" className="text-sm text-slate-300 hover:text-white transition-colors">Contact</Link>
-                <a href="https://islandhub.app" target="_blank" className="text-sm font-medium text-emerald-400 hover:text-emerald-300">
-                  IslandHub →
-                </a>
-              </div>
-              
-            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              type="button"
+              aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden min-w-[44px] min-h-[44px] p-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors flex items-center justify-center"
+            >
+              {mobileMenuOpen ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
           </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden py-4 border-t border-slate-800 space-y-1">
+              <Link href="/services" onClick={() => setMobileMenuOpen(false)} className="block py-3 px-4 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">Services</Link>
+              <Link href="/coops" onClick={() => setMobileMenuOpen(false)} className="block py-3 px-4 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">IBT Co-ops</Link>
+              <Link href="#partners" onClick={() => setMobileMenuOpen(false)} className="block py-3 px-4 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">Partners</Link>
+              <Link href="#contact" onClick={() => setMobileMenuOpen(false)} className="block py-3 px-4 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">Contact</Link>
+              <a href="https://islandhub-7dor6ly4p-rpskilli211-3018s-projects.vercel.app" target="_blank" rel="noopener noreferrer" className="block py-3 px-4 text-emerald-400 font-medium hover:bg-slate-800 rounded-lg">IslandHub →</a>
+            </div>
+          )}
         </div>
       </nav>
 
@@ -301,18 +332,19 @@ export default function Home() {
               {/* CTA */}
               <div className="flex flex-wrap gap-4">
                 <a 
-                  href="https://islandhub-9itk6wkoc-rpskilli211-3018s-projects.vercel.app/" 
+                  href="https://islandhub-7dor6ly4p-rpskilli211-3018s-projects.vercel.app" 
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-xl transition-all hover:shadow-lg hover:shadow-cyan-500/25"
                 >
                   Explore IslandHub →
                 </a>
-                <a 
-                  href="#contact"
+                <Link 
+                  href="/coops"
                   className="px-8 py-4 border border-slate-700 hover:border-slate-600 text-white font-medium rounded-xl transition-all"
                 >
-                  Become a Vendor
-                </a>
+                  Join IBT Co-ops
+                </Link>
               </div>
             </div>
           </div>
@@ -372,6 +404,11 @@ export default function Home() {
                 IBT
               </span>
               <span className="text-sm text-slate-500">Solutions</span>
+            </div>
+            <div className="flex items-center gap-6 text-sm text-slate-400">
+              <Link href="/services" className="hover:text-white transition-colors">Services</Link>
+              <Link href="/coops" className="hover:text-white transition-colors">IBT Co-ops</Link>
+              <a href="https://islandhub-7dor6ly4p-rpskilli211-3018s-projects.vercel.app" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">IslandHub</a>
             </div>
             <p className="text-slate-500 text-sm">
               © 2026 IBT Solutions. All rights reserved.
