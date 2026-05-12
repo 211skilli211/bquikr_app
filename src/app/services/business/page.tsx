@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { submitServiceInquiry } from '@/lib/api';
 
 const businessAPIs = [
@@ -31,7 +30,7 @@ const businessAPIs = [
     name: 'Inventory API',
     description: 'Real-time inventory management and tracking.',
     price: 'From $39/mo',
-    features: ['Stock levels', 'Reorder alerts', 'Multi-location', 'Barcode']
+    features: ['Stock levels', 'Reorder alerts', 'Multi-location', 'Barcode'],
   },
   {
     id: 'crm',
@@ -71,22 +70,6 @@ export default function BusinessPage() {
 
   return (
     <div className="bg-slate-950 min-h-screen">
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-lg border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/services" className="flex items-center gap-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">IBT</span>
-              <span className="text-sm text-slate-500 font-medium">Solutions</span>
-            </Link>
-            <div className="flex items-center gap-6">
-              <Link href="/services" className="text-sm text-slate-300 hover:text-white">Services</Link>
-              <Link href="/services/business" className="text-sm text-emerald-400">Business</Link>
-              <Link href="#pricing" className="px-4 py-2 bg-cyan-500 text-slate-900 text-sm font-medium rounded-lg">Get API Key</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <section className="pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -184,12 +167,6 @@ export default function BusinessPage() {
           {formStatus && <p className="mt-4 text-emerald-400">{formStatus}</p>}
         </div>
       </section>
-
-      <footer className="py-12 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 text-center text-slate-500">
-          <p>© 2025 IBT Solutions. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }

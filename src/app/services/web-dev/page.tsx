@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { submitServiceInquiry } from '@/lib/api';
 
 const webServices = [
@@ -52,7 +51,9 @@ const webServices = [
 
 export default function WebDevPage() {
   const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
   const [formStatus, setFormStatus] = useState('');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -61,30 +62,16 @@ export default function WebDevPage() {
       name: 'Website Visitor',
       email: email,
       source: 'bquikr',
-      message: 'Interested in website development services'
+      message: message || 'Interested in website development services'
     });
     
     setFormStatus('Thanks! We\'ll contact you within 24 hours.');
     setEmail('');
+    setMessage('');
   };
 
   return (
     <div className="bg-slate-950 min-h-screen">
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-lg border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/services" className="flex items-center gap-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">IBT</span>
-            </Link>
-            <div className="flex items-center gap-6">
-              <Link href="/services" className="text-sm text-slate-300">Services</Link>
-              <Link href="/services/audit" className="text-sm text-slate-300">Audit</Link>
-              <Link href="#pricing" className="px-4 py-2 bg-cyan-500 text-slate-900 text-sm font-medium rounded-lg">Get Quote</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <section className="pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <span className="inline-block px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm mb-6">
@@ -136,7 +123,6 @@ export default function WebDevPage() {
         </div>
       </section>
 
-      {/* Process */}
       <section className="py-20 border-t border-slate-800">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-2xl font-bold text-white text-center mb-12">How It Works</h2>
@@ -159,21 +145,17 @@ export default function WebDevPage() {
         </div>
       </section>
 
-      <section id="pricing" className="py-20 border-t border-slate-800">
+      <section className="py-20 border-t border-slate-800">
         <div className="max-w-2xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-6">Ready to get started?</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your email" className="w-full px-6 py-4 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-emerald-500" required />
-            <textarea placeholder="Tell us about your project" className="w-full px-6 py-4 bg-slate-900 border border-slate-800 rounded-xl text-white h-32 focus:outline-none focus:border-emerald-500" />
+            <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell us about your project" className="w-full px-6 py-4 bg-slate-900 border border-slate-800 rounded-xl text-white h-32 focus:outline-none focus:border-emerald-500" />
             <button className="w-full px-6 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-semibold rounded-xl">Send Inquiry</button>
           </form>
           {formStatus && <p className="mt-4 text-emerald-400">{formStatus}</p>}
         </div>
       </section>
-
-      <footer className="py-12 border-t border-slate-800 text-center text-slate-500">
-        <p>© 2025 IBT Solutions</p>
-      </footer>
     </div>
   );
 }

@@ -27,7 +27,7 @@ export default function MicroFarmsPage() {
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-[128px]" />
       </div>
 
-      <div className="relative pt-8 pb-20">
+      <div className="relative pt-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center gap-2 text-sm text-slate-400 mb-8">
             <Link href="/coops" className="hover:text-white transition-colors">IBT Co-ops</Link>
@@ -35,7 +35,7 @@ export default function MicroFarmsPage() {
             <span className="text-white">Micro-Farms</span>
           </nav>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
             <div>
               <span className="inline-block px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm mb-6">
                 Founding Phase
@@ -65,33 +65,24 @@ export default function MicroFarmsPage() {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-3xl blur-xl" />
               <div className="relative grid grid-cols-2 gap-4">
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-transparent border border-slate-800">
-                  <div className="text-4xl mb-3">🌱</div>
-                  <h3 className="font-semibold text-white">Urban Growers</h3>
-                  <p className="text-sm text-slate-400">Rooftop gardens, vertical farms</p>
-                </div>
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-amber-500/20 to-transparent border border-slate-800">
-                  <div className="text-4xl mb-3">🚜</div>
-                  <h3 className="font-semibold text-white">Small Farms</h3>
-                  <p className="text-sm text-slate-400">1-5 acre plots</p>
-                </div>
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-transparent border border-slate-800">
-                  <div className="text-4xl mb-3">🏡</div>
-                  <h3 className="font-semibold text-white">Community Plots</h3>
-                  <p className="text-sm text-slate-400">Shared garden spaces</p>
-                </div>
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-violet-500/20 to-transparent border border-slate-800">
-                  <div className="text-4xl mb-3">🌿</div>
-                  <h3 className="font-semibold text-white">Herbs & Specialty</h3>
-                  <p className="text-sm text-slate-400">Medical, culinary, ornamental</p>
-                </div>
+                {[
+                  { icon: '🌱', title: 'Urban Growers', desc: 'Rooftop gardens, vertical farms' },
+                  { icon: '🚜', title: 'Small Farms', desc: '1-5 acre plots' },
+                  { icon: '🏡', title: 'Community Plots', desc: 'Shared garden spaces' },
+                  { icon: '🌿', title: 'Herbs & Specialty', desc: 'Medical, culinary, ornamental' },
+                ].map((item) => (
+                  <div key={item.title} className="p-6 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-transparent border border-slate-800 text-center">
+                    <div className="text-4xl mb-3">{item.icon}</div>
+                    <h3 className="font-semibold text-white mb-1">{item.title}</h3>
+                    <p className="text-sm text-slate-400">{item.desc}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* What We Offer */}
       <section className="py-20 bg-slate-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -114,7 +105,6 @@ export default function MicroFarmsPage() {
         </div>
       </section>
 
-      {/* Benefits for Members */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -135,7 +125,6 @@ export default function MicroFarmsPage() {
         </div>
       </section>
 
-      {/* IslandHub Marketplace */}
       <section className="py-20 bg-gradient-to-b from-slate-950 to-slate-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-3xl">🏝️</div>
@@ -154,7 +143,6 @@ export default function MicroFarmsPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-20 border-t border-slate-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Grow With Us</h2>
@@ -169,7 +157,6 @@ export default function MicroFarmsPage() {
           </div>
         </div>
       </section>
-
-      </div>
+    </div>
   );
 }

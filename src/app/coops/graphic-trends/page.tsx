@@ -7,7 +7,7 @@ export const metadata = {
 
 const products = [
   { category: 'Apparel', items: ['T-Shirts', 'Hoodies', 'Caps', 'Workwear'] },
-  { category: 'Print', items: ['Business Cards', 'Flyers', 'Banners', ' Stickers'] },
+  { category: 'Print', items: ['Business Cards', 'Flyers', 'Banners', 'Stickers'] },
   { category: 'Promotional', items: ['Mugs', 'Keychains', 'Bags', 'Water Bottles'] },
   { category: 'Signage', items: ['Vehicle Wraps', 'Window Graphics', 'Trade Show Banners'] },
 ];
@@ -27,7 +27,7 @@ export default function GraphicTrendsPage() {
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-[128px]" />
       </div>
 
-      <div className="relative pt-8 pb-20">
+      <div className="relative pt-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center gap-2 text-sm text-slate-400 mb-8">
             <Link href="/coops" className="hover:text-white transition-colors">IBT Co-ops</Link>
@@ -35,7 +35,7 @@ export default function GraphicTrendsPage() {
             <span className="text-white">Graphic Trends</span>
           </nav>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
             <div>
               <span className="inline-block px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-sm mb-6">
                 Founding Phase
@@ -62,33 +62,27 @@ export default function GraphicTrendsPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-transparent border border-slate-800">
-                <div className="text-4xl mb-3">👕</div>
-                <h3 className="font-semibold text-white">Custom Apparel</h3>
-                <p className="text-sm text-slate-400">T-shirts, hoodies, caps</p>
-              </div>
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-transparent border border-slate-800">
-                <div className="text-4xl mb-3">📦</div>
-                <h3 className="font-semibold text-white">Print Products</h3>
-                <p className="text-sm text-slate-400">Cards, flyers, banners</p>
-              </div>
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-amber-500/20 to-transparent border border-slate-800">
-                <div className="text-4xl mb-3">🎁</div>
-                <h3 className="font-semibold text-white">Promotional</h3>
-                <p className="text-sm text-slate-400">Mugs, bags, swag</p>
-              </div>
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-violet-500/20 to-transparent border border-slate-800">
-                <div className="text-4xl mb-3">🚗</div>
-                <h3 className="font-semibold text-white">Signage</h3>
-                <p className="text-sm text-slate-400">Vehicle wraps, graphics</p>
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/10 to-emerald-500/10 rounded-3xl blur-xl" />
+              <div className="relative grid grid-cols-2 gap-4">
+                {[
+                  { icon: '👕', title: 'Custom Apparel', desc: 'T-shirts, hoodies, caps' },
+                  { icon: '📦', title: 'Print Products', desc: 'Cards, flyers, banners' },
+                  { icon: '🎁', title: 'Promotional', desc: 'Mugs, bags, swag' },
+                  { icon: '🚗', title: 'Signage', desc: 'Vehicle wraps, graphics' },
+                ].map((item) => (
+                  <div key={item.title} className="p-6 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-transparent border border-slate-800 text-center">
+                    <div className="text-4xl mb-3">{item.icon}</div>
+                    <h3 className="font-semibold text-white mb-1">{item.title}</h3>
+                    <p className="text-sm text-slate-400">{item.desc}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Product Categories */}
       <section className="py-20 bg-slate-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -116,7 +110,6 @@ export default function GraphicTrendsPage() {
         </div>
       </section>
 
-      {/* Features */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -137,7 +130,6 @@ export default function GraphicTrendsPage() {
         </div>
       </section>
 
-      {/* IslandHub Integration */}
       <section className="py-20 bg-gradient-to-b from-slate-950 to-slate-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-3xl">🏝️</div>
@@ -155,7 +147,6 @@ export default function GraphicTrendsPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-20 border-t border-slate-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Join the Cooperative</h2>
@@ -170,7 +161,6 @@ export default function GraphicTrendsPage() {
           </div>
         </div>
       </section>
-
-      </div>
+    </div>
   );
 }

@@ -4,18 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { submitServiceInquiry } from '@/lib/api';
 
-interface AuditResult {
-  domain: string;
-  overallScore: number;
-  seoScore: number;
-  mapsScore: number;
-  websiteScore: number;
-  socialScore: number;
-  grade: string;
-  issues: string[];
-  recommendations: string[];
-}
-
 const auditDimensions = [
   {
     id: 'seo',
@@ -95,6 +83,18 @@ function ScoreCircle({ score, label, color }: { score: number; label: string; co
   );
 }
 
+interface AuditResult {
+  domain: string;
+  overallScore: number;
+  seoScore: number;
+  mapsScore: number;
+  websiteScore: number;
+  socialScore: number;
+  grade: string;
+  issues: string[];
+  recommendations: string[];
+}
+
 export default function AuditPage() {
   const [domain, setDomain] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -106,7 +106,6 @@ export default function AuditPage() {
     e.preventDefault();
     setIsAnalyzing(true);
     
-    // Simulate analysis
     setTimeout(() => {
       setResult({
         domain: domain,
@@ -136,7 +135,7 @@ export default function AuditPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const result = await submitServiceInquiry({
+    await submitServiceInquiry({
       service_type: 'audit',
       name: 'Website Visitor',
       email: email,
@@ -144,40 +143,12 @@ export default function AuditPage() {
       message: 'Request for business audit service'
     });
     
-    if (result.success) {
-      setFormStatus('Thanks! We\'ll contact you within 24 hours.');
-    } else {
-      setFormStatus('Thanks! We\'ll contact you within 24 hours.');
-    }
+    setFormStatus('Thanks! We\'ll contact you within 24 hours.');
     setEmail('');
-  };
-
-  const getOverallGrade = (score: number) => {
-    if (score >= 90) return 'A';
-    if (score >= 75) return 'B';
-    if (score >= 60) return 'C';
-    if (score >= 40) return 'D';
-    return 'F';
   };
 
   return (
     <div className="bg-slate-950 min-h-screen">
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-lg border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/services" className="flex items-center gap-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">IBT</span>
-              <span className="text-sm text-slate-500 font-medium">Solutions</span>
-            </Link>
-            <div className="flex items-center gap-6">
-              <Link href="/services" className="text-sm text-slate-300 hover:text-white">Services</Link>
-              <Link href="/services/audit" className="text-sm text-emerald-400">Audit</Link>
-              <Link href="#pricing" className="px-4 py-2 bg-cyan-500 text-slate-900 text-sm font-medium rounded-lg">Start Audit</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <section className="pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -199,7 +170,6 @@ export default function AuditPage() {
         </div>
       </section>
 
-      {/* Audit Dimensions */}
       <section className="py-20 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-white text-center mb-12">How We Grade Your Business</h2>
@@ -219,7 +189,6 @@ export default function AuditPage() {
         </div>
       </section>
 
-      {/* Analyze Form */}
       <section className="py-20 border-t border-slate-800">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-slate-900 rounded-3xl p-8 border border-slate-800">
@@ -248,7 +217,6 @@ export default function AuditPage() {
         </div>
       </section>
 
-      {/* Results */}
       {result && (
         <section className="py-20 border-t border-slate-800">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -304,7 +272,6 @@ export default function AuditPage() {
         </section>
       )}
 
-      {/* For Businesses Without Websites */}
       <section className="py-20 border-t border-slate-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-br from-amber-900/20 to-orange-900/20 rounded-3xl p-8 border border-amber-500/30">
@@ -325,11 +292,16 @@ export default function AuditPage() {
         </div>
       </section>
 
-      <footer className="py-12 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 text-center text-slate-500">
-          <p>© 2025 IBT Solutions. All rights reserved.</p>
+      <section className="py-20 border-t border-slate-800">
+        <div className="max-w-2xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">Request Full Audit</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your email" className="w-full px-6 py-4 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-amber-500" required />
+            <button className="w-full px-6 py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 font-semibold rounded-xl">Request Audit</button>
+          </form>
+          {formStatus && <p className="mt-4 text-emerald-400">{formStatus}</p>}
         </div>
-      </footer>
+      </section>
     </div>
   );
 }

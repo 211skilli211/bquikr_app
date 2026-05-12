@@ -125,13 +125,13 @@ export default function APIServicesPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-100 mb-2">API Services</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">API Services</h1>
         <p className="text-slate-400">Ready-to-use APIs for automation workflows</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
-          <h2 className="text-xl font-semibold text-slate-200 mb-4">Available Services</h2>
+          <h2 className="text-xl font-semibold text-white mb-4">Available Services</h2>
           <div className="space-y-3">
             {apiServices.map((service) => (
               <button
@@ -144,7 +144,7 @@ export default function APIServicesPage() {
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="font-semibold text-slate-100">{service.name}</span>
+                  <span className="font-semibold text-white">{service.name}</span>
                   <span className="text-xs px-2 py-1 bg-slate-800 text-slate-400 rounded">{service.method}</span>
                 </div>
                 <p className="text-sm text-slate-400">{service.description}</p>
@@ -153,14 +153,14 @@ export default function APIServicesPage() {
           </div>
 
           <div className="mt-6 p-4 bg-slate-900/50 border border-slate-800 rounded-xl">
-            <h3 className="font-semibold text-slate-200 mb-3">Test Endpoint</h3>
+            <h3 className="font-semibold text-white mb-3">Test Endpoint</h3>
             <div className="space-y-3">
               <input
                 type="password"
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
                 placeholder="Enter API Key"
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-200 text-sm"
+                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm"
               />
               <button
                 onClick={testEndpoint}
@@ -174,7 +174,7 @@ export default function APIServicesPage() {
         </div>
 
         <div>
-          <h2 className="text-xl font-semibold text-slate-200 mb-4">Endpoint Details</h2>
+          <h2 className="text-xl font-semibold text-white mb-4">Endpoint Details</h2>
           <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
             <div className="mb-4">
               <span className={`text-xs px-2 py-1 rounded ${
@@ -203,7 +203,7 @@ export default function APIServicesPage() {
           </div>
 
           <div className="mt-6 p-4 bg-slate-900/30 border border-slate-800 rounded-xl">
-            <h3 className="font-semibold text-slate-200 mb-2">Usage & Pricing</h3>
+            <h3 className="font-semibold text-white mb-2">Usage & Pricing</h3>
             <ul className="text-sm text-slate-400 space-y-1">
               <li>• Free tier: 100 requests/month</li>
               <li>• Pro tier: $29/month - 10,000 requests</li>
