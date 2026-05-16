@@ -2,79 +2,27 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { Button, Section, SectionHeader, Card, Badge, GradientText, Input } from '@/components/ui';
 import { submitServiceInquiry } from '@/lib/api';
 
 const auditDimensions = [
-  {
-    id: 'seo',
-    name: 'SEO Score',
-    icon: '🔍',
-    description: 'On-page SEO, technical SEO, content quality, backlinks',
-    weight: 30,
-    color: 'amber',
-  },
-  {
-    id: 'maps',
-    name: 'Google Maps',
-    icon: '📍',
-    description: 'Business listing, verification, reviews, info completeness',
-    weight: 25,
-    color: 'blue',
-  },
-  {
-    id: 'website',
-    name: 'Website Quality',
-    icon: '🌐',
-    description: 'Speed, mobile, security, content quality',
-    weight: 25,
-    color: 'emerald',
-  },
-  {
-    id: 'social',
-    name: 'Social Presence',
-    icon: '📱',
-    description: 'Facebook, Instagram, LinkedIn presence',
-    weight: 20,
-    color: 'rose',
-  },
+  { id: 'seo', name: 'SEO Score', icon: '🔍', description: 'On-page SEO, technical SEO, content quality, backlinks', weight: 30 },
+  { id: 'maps', name: 'Google Maps', icon: '📍', description: 'Business listing, verification, reviews, info completeness', weight: 25 },
+  { id: 'website', name: 'Website Quality', icon: '🌐', description: 'Speed, mobile, security, content quality', weight: 25 },
+  { id: 'social', name: 'Social Presence', icon: '📱', description: 'Facebook, Instagram, LinkedIn presence', weight: 20 },
 ];
 
-function ScoreCircle({ score, label, color }: { score: number; label: string; color: string }) {
-  const getGrade = (s: number) => {
-    if (s >= 90) return 'A';
-    if (s >= 75) return 'B';
-    if (s >= 60) return 'C';
-    if (s >= 40) return 'D';
-    return 'F';
-  };
-
-  const colors: Record<string, string> = {
-    emerald: 'text-emerald-400',
-    blue: 'text-blue-400',
-    amber: 'text-amber-400',
-    rose: 'text-rose-400',
-    cyan: 'text-cyan-400',
-  };
-
+function ScoreCircle({ score, label }: { score: number; label: string }) {
+  const grade = score >= 90 ? 'A' : score >= 75 ? 'B' : score >= 60 ? 'C' : score >= 40 ? 'D' : 'F';
   return (
     <div className="flex flex-col items-center">
       <div className="relative w-24 h-24">
         <svg className="w-24 h-24 transform -rotate-90">
-          <circle cx="48" cy="48" r="40" stroke="currentColor" strokeWidth="8" fill="none" className="text-slate-800" />
-          <circle
-            cx="48"
-            cy="48"
-            r="40"
-            stroke="currentColor"
-            strokeWidth="8"
-            fill="none"
-            strokeDasharray={251.2}
-            strokeDashoffset={251.2 - (251.2 * score) / 100}
-            className={`${colors[color]} transition-all duration-1000`}
-          />
+          <circle cx="48" cy="48" r="40" stroke="currentColor" strokeWidth="8" fill="none" className="text-surface-2" />
+          <circle cx="48" cy="48" r="40" stroke="currentColor" strokeWidth="8" fill="none" strokeDasharray={251.2} strokeDashoffset={251.2 - (251.2 * score) / 100} className="text-teal-400 transition-all duration-1000" />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className={`text-2xl font-bold ${colors[color]}`}>{getGrade(score)}</span>
+          <span className="text-2xl font-bold text-teal-400">{grade}</span>
         </div>
       </div>
       <span className="text-sm text-slate-400 mt-2">{label}</span>
@@ -105,28 +53,11 @@ export default function AuditPage() {
   const handleAnalyze = (e: React.FormEvent) => {
     e.preventDefault();
     setIsAnalyzing(true);
-    
     setTimeout(() => {
       setResult({
-        domain: domain,
-        overallScore: 72,
-        seoScore: 65,
-        mapsScore: 78,
-        websiteScore: 68,
-        socialScore: 82,
-        grade: 'C',
-        issues: [
-          'Missing meta descriptions on 3 pages',
-          'No Google Business Profile found',
-          'Slow load time (4.2s)',
-          'No Instagram business account',
-        ],
-        recommendations: [
-          'Claim and verify Google Business Profile',
-          'Optimize images for web (use WebP)',
-          'Add structured data markup',
-          'Set up Instagram business account',
-        ],
+        domain, overallScore: 72, seoScore: 65, mapsScore: 78, websiteScore: 68, socialScore: 82, grade: 'C',
+        issues: ['Missing meta descriptions on 3 pages', 'No Google Business Profile found', 'Slow load time (4.2s)', 'No Instagram business account'],
+        recommendations: ['Claim and verify Google Business Profile', 'Optimize images for web (use WebP)', 'Add structured data markup', 'Set up Instagram business account'],
       });
       setIsAnalyzing(false);
     }, 2000);
@@ -134,174 +65,127 @@ export default function AuditPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    await submitServiceInquiry({
-      service_type: 'audit',
-      name: 'Website Visitor',
-      email: email,
-      source: 'bquikr',
-      message: 'Request for business audit service'
-    });
-    
+    await submitServiceInquiry({ service_type: 'audit', name: 'Website Visitor', email, source: 'bquikr', message: 'Request for business audit service' });
     setFormStatus('Thanks! We\'ll contact you within 24 hours.');
     setEmail('');
   };
 
   return (
-    <div className="bg-slate-950 min-h-screen">
-      <section className="pt-32 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="inline-block px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm mb-6">
-              Business Auditing
-            </span>
-            <h1 className="text-4xl sm:text-6xl font-bold text-white mb-6">
-              Know Your Business
-              <br />
-              <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 bg-clip-text text-transparent">
-                Score
-              </span>
-            </h1>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-              Comprehensive business scoring system - SEO analysis, Google Maps profile verification, 
-              website quality audits, and social presence analysis.
-            </p>
-          </div>
+    <div className="bg-surface-0">
+      {/* Hero */}
+      <Section>
+        <div className="text-center max-w-3xl mx-auto">
+          <Badge variant="sunset">Business Auditing</Badge>
+          <h1 className="text-4xl sm:text-6xl font-bold text-white mt-4 mb-6">
+            Know Your Business
+            <br />
+            <GradientText>Score</GradientText>
+          </h1>
+          <p className="text-xl text-slate-400">
+            Comprehensive business scoring — SEO analysis, Google Maps profile verification, website quality audits, and social presence analysis.
+          </p>
         </div>
-      </section>
+      </Section>
 
-      <section className="py-20 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-white text-center mb-12">How We Grade Your Business</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {auditDimensions.map((dim) => (
-              <div key={dim.id} className="bg-slate-900 rounded-2xl p-6 border border-slate-800">
-                <div className="text-4xl mb-4">{dim.icon}</div>
-                <h3 className="text-lg font-bold text-white mb-2">{dim.name}</h3>
-                <p className="text-sm text-slate-400 mb-4">{dim.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-500">Weight</span>
-                  <span className="text-sm font-medium text-white">{dim.weight}%</span>
-                </div>
+      {/* Audit Dimensions */}
+      <Section>
+        <SectionHeader badge="How We Grade" title="Audit Dimensions" center />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {auditDimensions.map((dim) => (
+            <Card key={dim.id}>
+              <div className="text-4xl mb-4">{dim.icon}</div>
+              <h3 className="text-lg font-bold text-white mb-2">{dim.name}</h3>
+              <p className="text-sm text-slate-400 mb-4">{dim.description}</p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-slate-500">Weight</span>
+                <span className="text-sm font-medium text-white">{dim.weight}%</span>
               </div>
-            ))}
-          </div>
+            </Card>
+          ))}
         </div>
-      </section>
+      </Section>
 
-      <section className="py-20 border-t border-slate-800">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-slate-900 rounded-3xl p-8 border border-slate-800">
-            <h2 className="text-2xl font-bold text-white text-center mb-8">Analyze Your Business</h2>
-            <form onSubmit={handleAnalyze} className="space-y-4">
-              <div>
-                <label className="text-sm text-slate-400 mb-2 block">Website or Business Name</label>
-                <input
-                  type="text"
-                  value={domain}
-                  onChange={(e) => setDomain(e.target.value)}
-                  placeholder="example.com or Business Name"
-                  className="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-500"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={isAnalyzing}
-                className="w-full px-6 py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 font-semibold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isAnalyzing ? 'Analyzing...' : 'Run Free Audit'}
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
+      {/* Audit Tool */}
+      <Section>
+        <Card className="max-w-2xl mx-auto">
+          <h2 className="text-2xl font-bold text-white text-center mb-8">Analyze Your Business</h2>
+          <form onSubmit={handleAnalyze} className="space-y-4">
+            <Input label="Website or Business Name" value={domain} onChange={(e) => setDomain(e.target.value)} placeholder="example.com or Business Name" required />
+            <Button type="submit" loading={isAnalyzing} className="w-full">{isAnalyzing ? 'Analyzing...' : 'Run Free Audit'}</Button>
+          </form>
+        </Card>
+      </Section>
 
+      {/* Results */}
       {result && (
-        <section className="py-20 border-t border-slate-800">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-slate-900 rounded-3xl p-8 border border-slate-800">
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-white mb-2">{result.domain}</h2>
-                <div className="text-6xl font-bold text-white mb-2">{result.grade}</div>
-                <p className="text-slate-400">Overall Score: {result.overallScore}/100</p>
+        <Section>
+          <Card className="max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold text-white mb-2">{result.domain}</h2>
+              <div className="text-6xl font-bold text-white mb-2">{result.grade}</div>
+              <p className="text-slate-400">Overall Score: {result.overallScore}/100</p>
+            </div>
+            <div className="flex justify-center gap-8 mb-8">
+              <ScoreCircle score={result.seoScore} label="SEO" />
+              <ScoreCircle score={result.mapsScore} label="Maps" />
+              <ScoreCircle score={result.websiteScore} label="Website" />
+              <ScoreCircle score={result.socialScore} label="Social" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-lg font-bold text-white mb-4">Issues Found</h3>
+                <ul className="space-y-2">
+                  {result.issues.map((issue, i) => (
+                    <li key={i} className="flex items-center gap-2 text-slate-400 text-sm">
+                      <span className="w-2 h-2 rounded-full bg-error" />{issue}
+                    </li>
+                  ))}
+                </ul>
               </div>
-
-              <div className="flex justify-center gap-8 mb-8">
-                <ScoreCircle score={result.seoScore} label="SEO" color="amber" />
-                <ScoreCircle score={result.mapsScore} label="Maps" color="blue" />
-                <ScoreCircle score={result.websiteScore} label="Website" color="emerald" />
-                <ScoreCircle score={result.socialScore} label="Social" color="rose" />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-lg font-bold text-white mb-4">Issues Found</h3>
-                  <ul className="space-y-2">
-                    {result.issues.map((issue, i) => (
-                      <li key={i} className="flex items-center gap-2 text-slate-400">
-                        <span className="w-2 h-2 rounded-full bg-rose-500" />
-                        {issue}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white mb-4">Recommendations</h3>
-                  <ul className="space-y-2">
-                    {result.recommendations.map((rec, i) => (
-                      <li key={i} className="flex items-center gap-2 text-slate-400">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                        {rec}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="flex gap-4 mt-8">
-                <button className="flex-1 px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white text-center font-medium rounded-xl">
-                  Download Full Report
-                </button>
-                <button className="flex-1 px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 text-center font-medium rounded-xl">
-                  Get Fix Quote
-                </button>
+              <div>
+                <h3 className="text-lg font-bold text-white mb-4">Recommendations</h3>
+                <ul className="space-y-2">
+                  {result.recommendations.map((rec, i) => (
+                    <li key={i} className="flex items-center gap-2 text-slate-400 text-sm">
+                      <span className="w-2 h-2 rounded-full bg-success" />{rec}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-          </div>
-        </section>
+            <div className="flex gap-4 mt-8">
+              <Button variant="secondary" className="flex-1">Download Full Report</Button>
+              <Button className="flex-1">Get Fix Quote</Button>
+            </div>
+          </Card>
+        </Section>
       )}
 
-      <section className="py-20 border-t border-slate-800">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-amber-900/20 to-orange-900/20 rounded-3xl p-8 border border-amber-500/30">
-            <h2 className="text-2xl font-bold text-white mb-4">Don&apos;t Have a Website?</h2>
-            <p className="text-slate-400 mb-6">
-              Our audit can find businesses that don&apos;t have a web presence. We specialize in creating 
-              professional websites for Caribbean businesses - from restaurants to tour operators.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/services/web-dev" className="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 font-medium rounded-xl text-center">
-                Get a Quote
-              </Link>
-              <button className="px-6 py-3 border border-slate-700 hover:border-slate-600 text-white font-medium rounded-xl">
-                List My Business
-              </button>
-            </div>
+      {/* No Website CTA */}
+      <Section>
+        <Card className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold text-white mb-4">Don't Have a Website?</h2>
+          <p className="text-slate-400 mb-6">
+            Our audit can find businesses that don't have a web presence. We specialize in creating professional websites for Caribbean businesses — from restaurants to tour operators.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button href="/services/web-dev">Get a Quote</Button>
+            <Button variant="outline">List My Business</Button>
           </div>
-        </div>
-      </section>
+        </Card>
+      </Section>
 
-      <section className="py-20 border-t border-slate-800">
-        <div className="max-w-2xl mx-auto px-4 text-center">
+      {/* Contact */}
+      <Section>
+        <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-white mb-6">Request Full Audit</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your email" className="w-full px-6 py-4 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-amber-500" required />
-            <button className="w-full px-6 py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 font-semibold rounded-xl">Request Audit</button>
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your email" required />
+            <Button type="submit">Request Audit</Button>
           </form>
-          {formStatus && <p className="mt-4 text-emerald-400">{formStatus}</p>}
+          {formStatus && <p className="mt-4 text-teal-400">{formStatus}</p>}
         </div>
-      </section>
+      </Section>
     </div>
   );
 }
