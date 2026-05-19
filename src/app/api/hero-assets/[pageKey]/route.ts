@@ -1,10 +1,15 @@
 import { NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
 
-/**
- * GET /api/hero-assets/[pageKey]
- * Returns hero asset for a specific page (public)
- */
+const ASSET_BASE = (process.env.ASSET_BASE_URL || '').replace(/\/$/, '');
+
+function resolveUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url;
+  if (ASSET_BASE && url.startsWith('/')) return `${ASSET_BASE}${url}`;
+  return url;
+}
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ pageKey: string }> }
@@ -23,11 +28,14 @@ export async function GET(
       return NextResponse.json(null);
     }
 
-    return NextResponse.json(result[0]);
+    const asset = result[0];
+    return NextResponse.json({
+      ...asset,
+      asset_url: resolveUrl(asset.asset_url),
+      icon_url: resolveUrl(asset.icon_url),
+    });
   } catch (error: any) {
-    if (error.code === '42P01') {
-      return NextResponse.json(null);
-    }
+    if (error.code === '42P01') return NextResponse.json(null);
     console.error('Error fetching hero asset:', error);
     return NextResponse.json(null, { status: 200 });
   }
