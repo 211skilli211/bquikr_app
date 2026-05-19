@@ -65,6 +65,10 @@ export default function AdminDashboard() {
                         <div className="text-2xl mb-2">⚙️</div>
                         <div className="font-semibold">Settings</div>
                     </Link>
+                    <Link href="/admin/salt-pond" className="bg-slate-900 p-4 rounded-xl border border-slate-800 hover:border-amber-500 transition-colors">
+                        <div className="text-2xl mb-2">🧂</div>
+                        <div className="font-semibold">Salt Pond CMS</div>
+                    </Link>
                 </div>
             </div>
         </div>
